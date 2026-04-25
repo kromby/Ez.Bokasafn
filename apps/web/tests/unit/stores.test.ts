@@ -12,9 +12,9 @@ describe('libraryScope store', () => {
   });
 
   it('persists set value to LocalStorage', () => {
-    setLibraryScope({ code: '10000_BORG', label: 'Borgarbókasafn' });
-    expect(get(libraryScope)).toEqual({ code: '10000_BORG', label: 'Borgarbókasafn' });
-    expect(localStorage.getItem('lastScope')).toContain('10000_BORG');
+    setLibraryScope({ code: 'CONSORTIUM', label: 'Borgarbókasafn' });
+    expect(get(libraryScope)).toEqual({ code: 'CONSORTIUM', label: 'Borgarbókasafn' });
+    expect(localStorage.getItem('lastScope')).toContain('CONSORTIUM');
   });
 
   it('rehydrates from LocalStorage', async () => {

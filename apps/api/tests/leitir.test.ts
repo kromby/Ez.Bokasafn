@@ -37,7 +37,7 @@ describe('suggest', () => {
     );
     vi.stubGlobal('fetch', fetchMock);
 
-    const out = await suggest('sjálf', '10000_BORG');
+    const out = await suggest('sjálf', 'CONSORTIUM');
     expect(out).toEqual([{ text: 'sjálfstætt' }, { text: 'sjálfstætt fólk' }]);
   });
 });
@@ -50,7 +50,7 @@ describe('search', () => {
     );
     vi.stubGlobal('fetch', fetchMock);
 
-    const out = await search('x', '10000_BORG', 0);
+    const out = await search('x', 'CONSORTIUM', 0);
     expect(out.info.total).toBe(2);
     expect(out.docs).toHaveLength(1);
     expect(out.did_u_mean).toBe('foo');
@@ -63,7 +63,7 @@ describe('search', () => {
     );
     vi.stubGlobal('fetch', fetchMock);
 
-    await expect(search('x', '10000_BORG', 0)).rejects.toMatchObject({ status: 401 });
+    await expect(search('x', 'CONSORTIUM', 0)).rejects.toMatchObject({ status: 401 });
   });
 });
 

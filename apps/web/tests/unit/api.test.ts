@@ -10,7 +10,7 @@ describe('api client', () => {
         json: async () => ({ suggestions: ['x'] }),
       }),
     );
-    const r = await apiSuggest('x', '10000_BORG');
+    const r = await apiSuggest('x', 'CONSORTIUM');
     expect(r.suggestions).toEqual(['x']);
   });
 
@@ -22,7 +22,7 @@ describe('api client', () => {
         json: async () => ({ available: [], onLoan: [], total: 0 }),
       }),
     );
-    const r = await apiSearch('x', '10000_BORG');
+    const r = await apiSearch('x', 'CONSORTIUM');
     expect(r.total).toBe(0);
   });
 
@@ -37,7 +37,7 @@ describe('api client', () => {
         }),
       }),
     );
-    const r = await apiBook('m', '10000_BORG');
+    const r = await apiBook('m', 'CONSORTIUM');
     expect(r.book.mmsId).toBe('m');
   });
 
@@ -50,13 +50,13 @@ describe('api client', () => {
         json: async () => ({ error: { message: 'oops' } }),
       }),
     );
-    await expect(apiSearch('x', '10000_BORG')).rejects.toBeInstanceOf(ApiError);
+    await expect(apiSearch('x', 'CONSORTIUM')).rejects.toBeInstanceOf(ApiError);
   });
 
   it('aborts when AbortSignal is aborted', async () => {
     const ctrl = new AbortController();
     ctrl.abort();
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new DOMException('aborted', 'AbortError')));
-    await expect(apiSuggest('x', '10000_BORG', ctrl.signal)).rejects.toMatchObject({ name: 'AbortError' });
+    await expect(apiSuggest('x', 'CONSORTIUM', ctrl.signal)).rejects.toMatchObject({ name: 'AbortError' });
   });
 });

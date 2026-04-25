@@ -28,7 +28,29 @@
       "Bash(curl -s http://localhost:5173/)",
       "Bash(npx tsc *)",
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_snapshot"
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_snapshot",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__navigate_page",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_console_messages",
+      "Bash(kill 83131)",
+      "Bash(ALLOWED_ORIGINS=http://localhost:5173 pnpm start)",
+      "Bash(awk '{print $2}')",
+      "Bash(xargs -r kill -9)",
+      "Bash(curl -i -s -H 'Origin: http://localhost:5173' 'http://localhost:7071/api/search?q=hringad&lib=10000_BORG')",
+      "Bash(pkill -f \"pnpm start\")",
+      "Bash(ALLOWED_ORIGINS=http://localhost:5174 pnpm start)",
+      "Bash(curl -i -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=hringad&lib=10000_BORG\")",
+      "Bash(lsof -ti:7071)",
+      "Bash(xargs kill *)",
+      "Bash(curl -v -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=hringad&lib=10000_BORG\")",
+      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/suggest?q=hringad&lib=10000_BORG\")",
+      "Bash(pkill -f \"func start\")",
+      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=hringad&lib=10000_BORG\")",
+      "Bash(pkill -f \"vite dev\")",
+      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=hringad&lib=CONSORTIUM\")",
+      "Bash(curl -v -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=hringad&lib=CONSORTIUM\")",
+      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=Halldór&lib=CONSORTIUM\")",
+      "Bash(curl -v -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM\")",
+      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM\")"
     ]
   }
 }

@@ -12,7 +12,7 @@
 
   $effect(() => {
     const mmsId = $page.params.mmsId;
-    const lib = $libraryScope?.code ?? '10000_BORG';
+    const lib = $libraryScope?.code ?? '10000_MYLIB';
     if (!mmsId) return;
 
     apiBook(mmsId, lib)

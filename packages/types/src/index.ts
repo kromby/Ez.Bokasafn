@@ -2,8 +2,8 @@
 // Both apps reference this via path alias in their tsconfig.
 
 export interface LibraryScope {
-  code: string;   // e.g. "10000_BORG"
-  label: string;  // e.g. "Borgarbókasafn"
+  code: string;   // e.g. "CONSORTIUM" or "10000_MYLIB"
+  label: string;  // e.g. "Stærsta safnið"
 }
 
 export interface Book {

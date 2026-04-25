@@ -15,7 +15,11 @@ async function authedJson(url: string, init: RequestInit = {}): Promise<any> {
       Accept: 'application/json',
     },
   });
-  if (!res.ok) throw new HttpError(res.status, `Upstream ${res.status}`);
+  if (!res.ok) {
+    const body = await res.text();
+    console.error(`[leitir] ${init.method || 'GET'} -> ${res.status}: ${body.substring(0, 200)}`);
+    throw new HttpError(res.status, `Upstream ${res.status}`);
+  }
   return res.json();
 }
 
@@ -54,7 +58,7 @@ export async function delivery(q: string, scope: string, offset: number): Promis
     `&inst=${encodeURIComponent(INST())}` +
     `&scope=${encodeURIComponent(scope)}` +
     `&vid=${encodeURIComponent(VID())}&lang=is&limit=20&offset=${offset}`;
-  return authedJson(url, { method: 'POST' });
+  return authedJson(url);
 }
 
 export async function getPhysicalService(mmsId: string): Promise<any> {

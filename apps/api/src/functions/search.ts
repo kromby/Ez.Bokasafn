@@ -12,7 +12,10 @@ export async function searchHandler(req: HttpRequest, ctx: InvocationContext): P
     const offset = Math.max(0, Number(req.query.get('offset') ?? '0') || 0);
     if (!q || !lib) return { status: 400, jsonBody: { error: { message: 'missing q or lib' } } };
 
-    const [pnxs, delv] = await Promise.all([search(q, lib, offset), delivery(q, lib, offset)]);
+    const [pnxs, delv] = await Promise.all([
+      search(q, lib, offset),
+      delivery(q, lib, offset).catch(() => ({ docs: [] })),
+    ]);
     const shaped = shapeSearch(pnxs, delv);
     ctx.log('search_performed', { lib, qLength: q.length, total: shaped.total });
     return { jsonBody: shaped };

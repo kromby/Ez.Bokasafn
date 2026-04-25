@@ -56,7 +56,7 @@ describe('bookHandler', () => {
         return { ok: true, json: async () => physical };
       }),
     );
-    const res = await bookHandler(req({ mmsId }, { lib: '10000_BORG' }, { origin: 'http://localhost:5173' }), ctx);
+    const res = await bookHandler(req({ mmsId }, { lib: 'CONSORTIUM' }, { origin: 'http://localhost:5173' }), ctx);
     expect(res.status).toBeUndefined();
     const body = res.jsonBody as any;
     expect(body.book.mmsId).toBe(mmsId);
@@ -73,12 +73,12 @@ describe('bookHandler', () => {
         return { ok: false, status: 404 };
       }),
     );
-    const res = await bookHandler(req({ mmsId: '999' }, { lib: '10000_BORG' }, { origin: 'http://localhost:5173' }), ctx);
+    const res = await bookHandler(req({ mmsId: '999' }, { lib: 'CONSORTIUM' }, { origin: 'http://localhost:5173' }), ctx);
     expect(res.status).toBe(404);
   });
 
   it('returns 403 on disallowed origin', async () => {
-    const res = await bookHandler(req({ mmsId }, { lib: '10000_BORG' }, { origin: 'https://evil.example.com' }), ctx);
+    const res = await bookHandler(req({ mmsId }, { lib: 'CONSORTIUM' }, { origin: 'https://evil.example.com' }), ctx);
     expect(res.status).toBe(403);
   });
 });

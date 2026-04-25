@@ -53,7 +53,7 @@ describe('searchHandler', () => {
       }),
     );
     const res = await searchHandler(
-      req({ q: 'sjálfstætt fólk', lib: '10000_BORG' }, { origin: 'http://localhost:5173' }),
+      req({ q: 'sjálfstætt fólk', lib: 'CONSORTIUM' }, { origin: 'http://localhost:5173' }),
       ctx,
     );
     expect(res.status).toBeUndefined();
@@ -64,12 +64,12 @@ describe('searchHandler', () => {
   });
 
   it('returns 403 on disallowed origin', async () => {
-    const res = await searchHandler(req({ q: 'x', lib: '10000_BORG' }, { origin: 'https://evil.example.com' }), ctx);
+    const res = await searchHandler(req({ q: 'x', lib: 'CONSORTIUM' }, { origin: 'https://evil.example.com' }), ctx);
     expect(res.status).toBe(403);
   });
 
   it('returns 400 when q or lib is missing', async () => {
-    const r1 = await searchHandler(req({ lib: '10000_BORG' }, { origin: 'http://localhost:5173' }), ctx);
+    const r1 = await searchHandler(req({ lib: 'CONSORTIUM' }, { origin: 'http://localhost:5173' }), ctx);
     const r2 = await searchHandler(req({ q: 'x' }, { origin: 'http://localhost:5173' }), ctx);
     expect(r1.status).toBe(400);
     expect(r2.status).toBe(400);
@@ -85,7 +85,7 @@ describe('searchHandler', () => {
         return { ok: false, status: 503 };
       }),
     );
-    const res = await searchHandler(req({ q: 'x', lib: '10000_BORG' }, { origin: 'http://localhost:5173' }), ctx);
+    const res = await searchHandler(req({ q: 'x', lib: 'CONSORTIUM' }, { origin: 'http://localhost:5173' }), ctx);
     expect(res.status).toBe(503);
   });
 
@@ -102,7 +102,7 @@ describe('searchHandler', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     const res = await searchHandler(
-      req({ q: 'test', lib: '10000_BORG', offset: '10' }, { origin: 'http://localhost:5173' }),
+      req({ q: 'test', lib: 'CONSORTIUM', offset: '10' }, { origin: 'http://localhost:5173' }),
       ctx,
     );
 
