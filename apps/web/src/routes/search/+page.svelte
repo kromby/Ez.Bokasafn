@@ -32,7 +32,7 @@
       .then((r) => (result = r))
       .catch((e) => {
         if ((e as Error).name === 'AbortError') return;
-        error = e instanceof ApiError && e.status === 502 ? 'Eitthvað fór úrskeiðis. Reyndu aftur.' : (e as Error).message;
+        error = e instanceof ApiError && e.status === 502 ? 'Eitthvað fór úrskeiðis. Reyndu aftur.' : (e instanceof Error ? e.message : 'An unexpected error occurred');
       })
       .finally(() => (loading = false));
   });

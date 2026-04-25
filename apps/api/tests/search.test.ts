@@ -109,7 +109,7 @@ describe('searchHandler', () => {
     expect(res.status).toBeUndefined();
     // Verify offset was passed (check second and third fetch calls contain offset=10)
     const calls = fetchMock.mock.calls;
-    expect(calls[1][0]).toContain('offset=10'); // search call
-    expect(calls[2][0]).toContain('offset=10'); // delivery call
+    expect(calls[1]?.[0]).toContain('offset=10'); // search call
+    expect(calls[2]?.[0]).toContain('offset=10'); // delivery call
   });
 });

@@ -51,7 +51,7 @@ function deliveryToBranches(deliveryDoc: any): {
   returns.sort();
   return {
     onShelf: [...new Set(onShelf)],
-    earliestReturn: returns[0],
+    ...(returns[0] && { earliestReturn: returns[0] }),
     hasAny: records.length > 0,
   };
 }
@@ -88,12 +88,12 @@ function pnxToBook(doc: any, deliveryByMms: Map<string, any>): Book | null {
   return {
     mmsId,
     title,
-    author,
-    year,
-    isbn,
+    ...(author && { author }),
+    ...(year && { year }),
+    ...(isbn && { isbn }),
     coverSources,
     branchesOnShelf: branches.onShelf,
-    earliestReturn: branches.onShelf.length === 0 ? branches.earliestReturn : undefined,
+    ...(branches.onShelf.length === 0 && branches.earliestReturn && { earliestReturn: branches.earliestReturn }),
   };
 }
 
@@ -142,16 +142,21 @@ export function shapeBook(pnxDoc: any, physical: any): BookResponse {
     const callNumber = r?.callNumber;
     const isAvailable = r?.availabilityStatus === 'available' || r?.availability === 'available';
     if (isAvailable) {
-      branches.push({ branch, status: 'on-shelf', callNumber });
+      branches.push({
+        branch,
+        status: 'on-shelf',
+        ...(callNumber && { callNumber }),
+      });
       onShelfNames.push(branch);
     } else {
+      const dueDate = typeof r?.dueDate === 'string' ? r.dueDate : undefined;
       branches.push({
         branch,
         status: 'on-loan',
-        callNumber,
-        earliestReturn: typeof r?.dueDate === 'string' ? r.dueDate : undefined,
+        ...(callNumber && { callNumber }),
+        ...(dueDate && { earliestReturn: dueDate }),
       });
-      if (typeof r?.dueDate === 'string') returns.push(r.dueDate);
+      if (dueDate) returns.push(dueDate);
     }
   }
   returns.sort();
@@ -159,15 +164,15 @@ export function shapeBook(pnxDoc: any, physical: any): BookResponse {
   const book: BookDetail = {
     mmsId,
     title,
-    author,
-    year,
-    isbn,
+    ...(author && { author }),
+    ...(year && { year }),
+    ...(isbn && { isbn }),
     coverSources,
     branchesOnShelf: onShelfNames,
-    earliestReturn: onShelfNames.length === 0 ? returns[0] : undefined,
-    summary,
+    ...(onShelfNames.length === 0 && returns[0] && { earliestReturn: returns[0] }),
+    ...(summary && { summary }),
     genres,
-    pageCount,
+    ...(pageCount && { pageCount }),
   };
 
   return { book, branches };
