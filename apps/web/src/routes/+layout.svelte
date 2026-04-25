@@ -1,5 +1,6 @@
 <script>
   import { dev } from '$app/environment';
+  import '../app.css';
 </script>
 
 <svelte:head>
