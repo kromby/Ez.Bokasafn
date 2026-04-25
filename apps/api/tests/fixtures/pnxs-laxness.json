@@ -1,0 +1,44 @@
+{
+  "docs": [
+    {
+      "pnx": {
+        "control": {
+          "recordid": ["991105435489706386"]
+        },
+        "display": {
+          "title": ["Sjálfstætt fólk"],
+          "creator": ["Laxness, Halldór Kiljan, 1902-1998"],
+          "creationdate": ["1946"],
+          "type": ["book"],
+          "format": ["382 págur"]
+        },
+        "search": {
+          "isbn": ["9789979339264"]
+        }
+      }
+    },
+    {
+      "pnx": {
+        "control": {
+          "recordid": ["991108765899706386"]
+        },
+        "display": {
+          "title": ["Sjálfstætt fólk: draumur"],
+          "creator": ["Laxness, Halldór Kiljan"],
+          "creationdate": ["1948"],
+          "type": ["book"],
+          "format": ["420 págur"]
+        },
+        "search": {
+          "isbn": ["9789979339288"]
+        }
+      }
+    }
+  ],
+  "info": {
+    "total": 2,
+    "totalRecordCount": 2,
+    "pageSize": 20,
+    "pageNumber": 1
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "libraryName": "Þjóðarbókhladan",
+      "location": "Main Library",
+      "subLocation": "Adults",
+      "callNumber": "Lax-1946",
+      "availabilityStatus": "available",
+      "availability": "available",
+      "barcode": "3010987654321"
+    },
+    {
+      "libraryName": "Grensásvegi",
+      "location": "Branch Library",
+      "subLocation": "General",
+      "callNumber": "Lax-1946-2",
+      "availabilityStatus": "available",
+      "availability": "available",
+      "barcode": "3010987654322"
+    }
+  ]
+}

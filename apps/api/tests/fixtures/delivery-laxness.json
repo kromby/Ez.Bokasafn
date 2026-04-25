@@ -1,0 +1,48 @@
+{
+  "docs": [
+    {
+      "pnx": {
+        "control": {
+          "recordid": ["991105435489706386"]
+        }
+      },
+      "delivery": {
+        "holding": [
+          {
+            "libraryName": "Þjóðarbókhladan",
+            "location": "Main Library",
+            "availabilityStatus": "available",
+            "availability": "available",
+            "callNumber": "Lax-1946"
+          },
+          {
+            "libraryName": "Grensásvegi",
+            "location": "Branch Library",
+            "availabilityStatus": "available",
+            "availability": "available",
+            "callNumber": "Lax-1946-2"
+          }
+        ]
+      }
+    },
+    {
+      "pnx": {
+        "control": {
+          "recordid": ["991108765899706386"]
+        }
+      },
+      "delivery": {
+        "holding": [
+          {
+            "libraryName": "Þjóðarbókhladan",
+            "location": "Main Library",
+            "availabilityStatus": "checked_out",
+            "availability": "not_available",
+            "dueDate": "2026-05-15",
+            "callNumber": "Lax-1948"
+          }
+        ]
+      }
+    }
+  ]
+}
