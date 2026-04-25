@@ -1,0 +1,17 @@
+{
+  "name": "Finna bók — Leita á bókum",
+  "short_name": "Finna bók",
+  "description": "Leita á bókum í íslenskum opinberum safnum",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#f0eee9",
+  "background_color": "#f0eee9",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
