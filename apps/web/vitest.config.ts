@@ -7,5 +7,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: [],
+    include: ['tests/**/*.test.ts'],
+  },
+  resolve: {
+    extensions: ['.js', '.ts', '.svelte'],
   },
 });

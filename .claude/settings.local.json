@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_pages",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_network_requests",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__get_network_request",
+      "Bash(/Users/kromby/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh *)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(mkdir -p /tmp/ez-design)",
+      "Read(//tmp/**)",
+      "Bash(cp /Users/kromby/.claude/projects/-Users-kromby-Source-Personal-Ez-Bokasafn/7321efee-53ec-404b-baa9-7dc45a38b144/tool-results/webfetch-1777117313137-1auueu.bin design.gz)",
+      "Bash(gunzip -k design.gz)",
+      "Read(//private/tmp/ez-design/**)",
+      "Bash(tar -xf design)",
+      "Bash(pnpm --version)",
+      "Bash(git add *)",
+      "Bash(git *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm *)",
+      "Bash(npx vitest *)",
+      "Bash(curl -s \"https://www.leitir.is/primaws/rest/pub/institution/354ILC_NETWORK/guestJwt?isGuest=true&lang=is&viewId=354ILC_NETWORK:10000_UNION\")",
+      "Bash(curl -v \"https://www.leitir.is/primaws/rest/pub/institution/354ILC_NETWORK/guestJwt?isGuest=true&lang=is&viewId=354ILC_NETWORK:10000_UNION\")",
+      "Bash(curl -s -H 'Authorization: Bearer eyJraWQiOiJwcmltYVByaXZhdGVLZXktMzU0SUxDX05FVFdPUksiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJQcmltYSIsImp0aSI6IiIsImV4cCI6MTc3NzIwNjYzNiwiaWF0IjoxNzc3MTIwMjM2LCJ1c2VyTmFtZSI6ImFub255bW91cy0wNDI1XzEyMzAzNiIsImRpc3BsYXlOYW1lIjpudWxsLCJ1c2VyIjoiYW5vbnltb3VzLTA0MjVfMTIzMDM2IiwidXNlckdyb3VwIjoiR1VFU1QiLCJpbnN0aXR1dGlvbiI6IjM1NElMQ19ORVRXT1JLIiwidXNlcklwIjoiNDUuMTU1LjQyLjIyNCIsImF1dGhlbnRpY2F0aW9uUHJvZmlsZSI6IiIsImF1dGhlbnRpY2F0aW9uU3lzdGVtIjoiIiwibGFuZ3VhZ2UiOiJlbiIsInNhbWxTZXNzaW9uSW5kZXgiOiIiLCJzYW1sTmFtZUlkIjoiIiwib25DYW1wdXMiOiJmYWxzZSIsInNpZ25lZEluIjpudWxsLCJ2aWV3SWQiOiIzNTRJTENfTkVUV09SSzoxMDAwMF9VTklPTiIsInNlbGZSZWdpc3RlcmVkIjpudWxsLCJyZXN0cmljdGVkVXNlciI6bnVsbH0.s6oT4FzS5N_2iAiMGrABrUdKfBuseB0xAO1_R1_Zyk8C-8x_cmJM0ATfrfcVkdYFChFyfnDGz54KoKabMjwxMw' 'https://www.leitir.is/primaws/rest/pub/pnxs?q=any,contains,sj%C3%A1lfst%C3%A6tt%20f%C3%B3lk&inst=354ILC_NETWORK&scope=10000_BORG&vid=354ILC_NETWORK:10000_UNION&tab=MyLibrary&limit=20&offset=0&sort=rank&lang=is')",
+      "Bash(curl -v -H 'Authorization: Bearer eyJraWQiOiJwcmltYVByaXZhdGVLZXktMzU0SUxDX05FVFdPUksiLCJhbGciOiJFUzI1NiJ9.eyJpc3MiOiJQcmltYSIsImp0aSI6IiIsImV4cCI6MTc3NzIwNjYzNiwiaWF0IjoxNzc3MTIwMjM2LCJ1c2VyTmFtZSI6ImFub255bW91cy0wNDI1XzEyMzAzNiIsImRpc3BsYXlOYW1lIjpudWxsLCJ1c2VyIjoiYW5vbnltb3VzLTA0MjVfMTIzMDM2IiwidXNlckdyb3VwIjoiR1VFU1QiLCJpbnN0aXR1dGlvbiI6IjM1NElMQ19ORVRXT1JLIiwidXNlcklwIjoiNDUuMTU1LjQyLjIyNCIsImF1dGhlbnRpY2F0aW9uUHJvZmlsZSI6IiIsImF1dGhlbnRpY2F0aW9uU3lzdGVtIjoiIiwibGFuZ3VhZ2UiOiJlbiIsInNhbWxTZXNzaW9uSW5kZXgiOiIiLCJzYW1sTmFtZUlkIjoiIiwib25DYW1wdXMiOiJmYWxzZSIsInNpZ25lZEluIjpudWxsLCJ2aWV3SWQiOiIzNTRJTENfTkVUV09SSzoxMDAwMF9VTklPTiIsInNlbGZSZWdpc3RlcmVkIjpudWxsLCJyZXN0cmljdGVkVXNlciI6bnVsbH0.s6oT4FzS5N_2iAiMGrABrUdKfBuseB0xAO1_R1_Zyk8C-8x_cmJM0ATfrfcVkdYFChFyfnDGz54KoKabMjwxMw' 'https://www.leitir.is/primaws/rest/pub/pnxs?q=any,contains,test&inst=354ILC_NETWORK&scope=10000_BORG&vid=354ILC_NETWORK:10000_UNION&tab=MyLibrary&limit=20&offset=0&sort=rank&lang=is')",
+      "Bash(cat)",
+      "Bash(node /tmp/capture-fixtures.mjs)",
+      "Bash(node *)",
+      "Bash(curl -s http://localhost:5173/)",
+      "Bash(npx tsc *)"
+    ]
+  }
+}
