@@ -62,7 +62,10 @@
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__fill",
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__click",
       "Bash(ALLOWED_ORIGINS=http://localhost:5173 pnpm --filter api start)",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__evaluate_script"
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__evaluate_script",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__close_page",
+      "Bash(pkill -f \"pnpm.*dev\")",
+      "Bash(pnpm dev *)"
     ]
   }
 }

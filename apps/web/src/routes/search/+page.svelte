@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
   import { onDestroy } from 'svelte';
   import { libraryScope, setLibraryScope } from '$lib/stores.js';
   import { LIBRARY_SCOPES } from '$lib/scopes.js';
@@ -15,11 +16,21 @@
 
   $effect(() => {
     const q = $page.url.searchParams.get('q') ?? '';
-    const lib = $page.url.searchParams.get('lib') ?? $libraryScope?.code;
-    if (lib && lib !== $libraryScope?.code) {
+    const libParam = $page.url.searchParams.get('lib');
+    const lib = libParam || $libraryScope?.code;
+
+    // If library param in URL differs from current scope, sync them
+    if (lib && libParam !== $libraryScope?.code) {
       const found = LIBRARY_SCOPES.find((s) => s.code === lib);
       if (found) setLibraryScope(found);
     }
+
+    // If scope changed but URL param is missing/different, update URL
+    if (lib && libParam !== lib) {
+      goto(`?q=${encodeURIComponent($page.url.searchParams.get('q') ?? '')}&lib=${encodeURIComponent(lib)}`, { replaceState: true });
+      return; // Let the next effect cycle handle the search
+    }
+
     if (!q || !lib) return;
 
     controller?.abort();
