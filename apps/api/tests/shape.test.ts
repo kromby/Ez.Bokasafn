@@ -28,7 +28,7 @@ describe('shapeSearch', () => {
     expect(out.total).toBeGreaterThan(0);
     expect(out.available.length + out.onLoan.length).toBeLessThanOrEqual(out.total);
     for (const b of [...out.available, ...out.onLoan]) {
-      expect(b.mmsId).toMatch(/^\d+$/);
+      expect(b.mmsId).toMatch(/^(alma)?\d+$/);
       expect(typeof b.title).toBe('string');
       expect(b.coverSources.length).toBeGreaterThan(0);
     }

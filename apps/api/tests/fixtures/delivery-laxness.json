@@ -3,24 +3,30 @@
     {
       "pnx": {
         "control": {
-          "recordid": ["991105435489706386"]
+          "recordid": [
+            "alma991011893879706886"
+          ]
         }
       },
       "delivery": {
         "holding": [
           {
-            "libraryName": "Þjóðarbókhladan",
+            "libraryName": "Þjóðarbókhladan - Aðalstöð",
             "location": "Main Library",
+            "subLocation": "Almenn safn",
             "availabilityStatus": "available",
             "availability": "available",
-            "callNumber": "Lax-1946"
+            "callNumber": "Strompleik",
+            "barcode": "3010000001"
           },
           {
             "libraryName": "Grensásvegi",
             "location": "Branch Library",
+            "subLocation": "General",
             "availabilityStatus": "available",
             "availability": "available",
-            "callNumber": "Lax-1946-2"
+            "callNumber": "Strompleik",
+            "barcode": "3010000002"
           }
         ]
       }
@@ -28,18 +34,22 @@
     {
       "pnx": {
         "control": {
-          "recordid": ["991108765899706386"]
+          "recordid": [
+            "alma991012084069706886"
+          ]
         }
       },
       "delivery": {
         "holding": [
           {
-            "libraryName": "Þjóðarbókhladan",
+            "libraryName": "Þjóðarbókhladan - Aðalstöð",
             "location": "Main Library",
-            "availabilityStatus": "checked_out",
+            "subLocation": "Almenn safn",
+            "availabilityStatus": "on_shelf",
             "availability": "not_available",
             "dueDate": "2026-05-15",
-            "callNumber": "Lax-1948"
+            "callNumber": "An Iceland",
+            "barcode": "3010000003"
           }
         ]
       }

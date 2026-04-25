@@ -1,22 +1,24 @@
 {
   "records": [
     {
-      "libraryName": "Þjóðarbókhladan",
+      "libraryName": "Þjóðarbókhladan - Aðalstöð",
       "location": "Main Library",
-      "subLocation": "Adults",
-      "callNumber": "Lax-1946",
+      "subLocation": "Almenn safn",
+      "callNumber": "LAX-001",
+      "barcode": "3010000001",
       "availabilityStatus": "available",
       "availability": "available",
-      "barcode": "3010987654321"
+      "dueDate": null
     },
     {
       "libraryName": "Grensásvegi",
       "location": "Branch Library",
       "subLocation": "General",
-      "callNumber": "Lax-1946-2",
+      "callNumber": "LAX-002",
+      "barcode": "3010000002",
       "availabilityStatus": "available",
       "availability": "available",
-      "barcode": "3010987654322"
+      "dueDate": null
     }
   ]
 }
