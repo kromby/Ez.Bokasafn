@@ -43,4 +43,16 @@ describe('assertAllowedOrigin', () => {
       expect((e as HttpError).status).toBe(403);
     }
   });
+
+  it('rejects subdomain prefix collisions (e.g., app.example.com.evil.io)', () => {
+    expect(() =>
+      assertAllowedOrigin(reqWithHeaders({ origin: 'https://app.example.com.evil.io' })),
+    ).toThrow(HttpError);
+  });
+
+  it('accepts exact origin match but rejects different ports', () => {
+    expect(() =>
+      assertAllowedOrigin(reqWithHeaders({ origin: 'https://app.example.com:8443' })),
+    ).toThrow(HttpError); // port 8443 not in allow-list
+  });
 });

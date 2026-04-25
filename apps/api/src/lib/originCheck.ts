@@ -11,10 +11,19 @@ export function assertAllowedOrigin(req: MinimalReq): void {
     .filter(Boolean);
   if (allowed.length === 0) throw new HttpError(403, 'Forbidden');
 
-  const origin = req.headers.get('origin') ?? req.headers.get('referer') ?? '';
-  if (!origin) throw new HttpError(403, 'Forbidden');
+  const originHeader = req.headers.get('origin') ?? req.headers.get('referer');
+  if (!originHeader) throw new HttpError(403, 'Forbidden');
 
-  if (!allowed.some((a) => origin.startsWith(a))) {
+  // Extract origin from URL (handles both Origin and Referer formats)
+  let requestOrigin: string;
+  try {
+    const url = new URL(originHeader);
+    requestOrigin = url.origin; // e.g., "https://app.example.com"
+  } catch {
+    throw new HttpError(403, 'Forbidden');
+  }
+
+  if (!allowed.includes(requestOrigin)) {
     throw new HttpError(403, 'Forbidden');
   }
 }
