@@ -8,12 +8,12 @@
 </script>
 
 <div class="appbar">
-  <button class="iconbtn" aria-label="Til baka" onclick={back}>
+  <button class="iconbtn" aria-label="Til baka" on:click={back}>
     <svg viewBox="0 0 17 17" fill="none">
       <path d="M10.5 3.5L5 8.5L10.5 13.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
     </svg>
   </button>
-  <button class="iconbtn" aria-label="Deila" onclick={onShare}>
+  <button class="iconbtn" aria-label="Deila" on:click={onShare}>
     <svg viewBox="0 0 17 17" fill="none">
       <path d="M8.5 11V2.5M8.5 2.5L5.5 5.5M8.5 2.5L11.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       <path d="M3.5 9.5V13.5C3.5 14.05 3.95 14.5 4.5 14.5H12.5C13.05 14.5 13.5 14.05 13.5 13.5V9.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />

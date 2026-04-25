@@ -13,11 +13,13 @@
   $effect(() => {
     const mmsId = $page.params.mmsId;
     const lib = $libraryScope?.code ?? '10000_BORG';
+    if (!mmsId) return;
+
     apiBook(mmsId, lib)
       .then((r) => (data = r))
       .catch((e) => {
         if (e instanceof ApiError && e.status === 404) error = 'Bókin fannst ekki';
-        else error = (e as Error).message;
+        else error = (e instanceof Error ? e.message : 'An unexpected error occurred');
       });
   });
 
@@ -28,7 +30,11 @@
     if (navigator.share) {
       try {
         await navigator.share({ title, url });
-      } catch {}
+      } catch (e) {
+        if ((e as Error).name !== 'AbortError') {
+          console.error('Share failed:', e);
+        }
+      }
     } else {
       await navigator.clipboard.writeText(url);
       alert('Slóð afrituð á klemmuspjald.');
@@ -82,7 +88,7 @@
     <div style="height:36px"></div>
   {/if}
 {:else}
-  <div style="padding:60px 24px;text-align:center;color:var(--ink-3);">Hleður…</div>
+  <div style="padding:60px 24px;text-align:center;color:var(--ink-3);" role="status" aria-live="polite">Hleður…</div>
 {/if}
 
 <style>
