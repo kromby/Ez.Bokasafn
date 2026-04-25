@@ -1,0 +1,26 @@
+node_modules/
+dist/
+.svelte-kit/
+build/
+coverage/
+.turbo/
+
+# Azure Functions
+local.settings.json
+bin/
+obj/
+
+# Editor
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Brainstorming companion
+.superpowers/
+
+# Misc
+*.log
+.env
+.env.local
