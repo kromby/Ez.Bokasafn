@@ -75,7 +75,7 @@ describe('searchHandler', () => {
     expect(r2.status).toBe(400);
   });
 
-  it('returns 502 when upstream fails', async () => {
+  it('returns upstream status when upstream fails', async () => {
     let n = 0;
     vi.stubGlobal(
       'fetch',
@@ -86,6 +86,30 @@ describe('searchHandler', () => {
       }),
     );
     const res = await searchHandler(req({ q: 'x', lib: '10000_BORG' }, { origin: 'http://localhost:5173' }), ctx);
-    expect(res.status).toBe(502);
+    expect(res.status).toBe(503);
+  });
+
+  it('passes offset parameter to upstream calls', async () => {
+    const pnxs = fixture('pnxs-laxness.json');
+    const delivery = fixture('delivery-laxness.json');
+    let n = 0;
+    const fetchMock = vi.fn().mockImplementation(async (url) => {
+      n += 1;
+      if (n === 1) return { ok: true, text: async () => fakeJwt() };
+      if (n === 2) return { ok: true, json: async () => pnxs };
+      return { ok: true, json: async () => delivery };
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    const res = await searchHandler(
+      req({ q: 'test', lib: '10000_BORG', offset: '10' }, { origin: 'http://localhost:5173' }),
+      ctx,
+    );
+
+    expect(res.status).toBeUndefined();
+    // Verify offset was passed (check second and third fetch calls contain offset=10)
+    const calls = fetchMock.mock.calls;
+    expect(calls[1][0]).toContain('offset=10'); // search call
+    expect(calls[2][0]).toContain('offset=10'); // delivery call
   });
 });
