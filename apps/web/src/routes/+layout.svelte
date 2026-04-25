@@ -1,6 +1,9 @@
-<script>
-  import { dev } from '$app/environment';
+<script lang="ts">
   import '../app.css';
+  import { onMount } from 'svelte';
+  import { maybeInjectCfWebAnalytics } from '$lib/analytics.js';
+  let { children } = $props();
+  onMount(() => maybeInjectCfWebAnalytics());
 </script>
 
 <svelte:head>
@@ -8,7 +11,7 @@
 </svelte:head>
 
 <div class="app">
-  <slot />
+  {@render children()}
 </div>
 
 <style>
