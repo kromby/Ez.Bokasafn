@@ -1,0 +1,11 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "LEITIR_BASE_URL": "https://www.leitir.is",
+    "LEITIR_VID": "354ILC_NETWORK:10000_UNION",
+    "LEITIR_INST": "354ILC_NETWORK",
+    "ALLOWED_ORIGINS": "http://localhost:5173"
+  }
+}

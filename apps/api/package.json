@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/functions/*.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "func start",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.6.0",
+    "@ez-bokasafn/types": "workspace:*",
+    "applicationinsights": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.5",
+    "msw": "^2.4.9",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.1"
+  }
+}
