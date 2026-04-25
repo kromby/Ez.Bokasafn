@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { get } from 'svelte/store';
 import { libraryScope, setLibraryScope } from '../../src/lib/stores.js';
 
@@ -19,7 +19,8 @@ describe('libraryScope store', () => {
 
   it('rehydrates from LocalStorage', async () => {
     localStorage.setItem('lastScope', JSON.stringify({ code: '10000_KOP', label: 'Kópavogsbókasafn' }));
-    const fresh = await import(`../../src/lib/stores.js?bust=${Date.now()}`);
+    vi.resetModules();
+    const fresh = await import('../../src/lib/stores.js');
     expect(get(fresh.libraryScope)).toEqual({ code: '10000_KOP', label: 'Kópavogsbókasafn' });
   });
 });
