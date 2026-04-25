@@ -3,6 +3,8 @@ import { search, delivery } from '../lib/leitir.js';
 import { shapeSearch } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
 import { HttpError } from '../lib/errors.js';
+import { initTelemetry, trackEvent } from '../lib/telemetry.js';
+initTelemetry();
 
 export async function searchHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
@@ -17,7 +19,7 @@ export async function searchHandler(req: HttpRequest, ctx: InvocationContext): P
       delivery(q, lib, offset).catch(() => ({ docs: [] })),
     ]);
     const shaped = shapeSearch(pnxs, delv);
-    ctx.log('search_performed', { lib, qLength: q.length, total: shaped.total, available: shaped.available.length, onLoan: shaped.onLoan.length });
+    trackEvent('search_performed', { lib, qLength: q.length, total: shaped.total });
     return { jsonBody: shaped };
   } catch (e) {
     if (e instanceof HttpError) return { status: e.status, jsonBody: { error: { message: e.message } } };

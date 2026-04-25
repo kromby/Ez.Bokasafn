@@ -3,6 +3,8 @@ import { getFullRecord, getPhysicalService } from '../lib/leitir.js';
 import { shapeBook } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
 import { HttpError } from '../lib/errors.js';
+import { initTelemetry, trackEvent } from '../lib/telemetry.js';
+initTelemetry();
 
 export async function bookHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
@@ -13,7 +15,7 @@ export async function bookHandler(req: HttpRequest, ctx: InvocationContext): Pro
 
     const [pnxDoc, physical] = await Promise.all([getFullRecord(mmsId), getPhysicalService(mmsId)]);
     const shaped = shapeBook(pnxDoc, physical);
-    ctx.log('book_detail_viewed', { mmsId, lib });
+    trackEvent('book_detail_viewed', { mmsId, lib: lib ?? '' });
     return { jsonBody: shaped };
   } catch (e) {
     if (e instanceof HttpError) {

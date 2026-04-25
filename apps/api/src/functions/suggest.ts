@@ -3,6 +3,8 @@ import { suggest } from '../lib/leitir.js';
 import { shapeSuggest } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
 import { HttpError } from '../lib/errors.js';
+import { initTelemetry } from '../lib/telemetry.js';
+initTelemetry();
 
 export async function suggestHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {

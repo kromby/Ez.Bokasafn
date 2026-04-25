@@ -12,7 +12,7 @@ function decodeExp(jwt: string): number {
   return payload.exp * 1000;
 }
 
-async function fetchFresh(): Promise<string> {
+async function fetchFresh(reason: 'expiry' | 'auth-error' = 'expiry'): Promise<string> {
   const base = process.env.LEITIR_BASE_URL ?? 'https://www.leitir.is';
   const inst = process.env.LEITIR_INST ?? '354ILC_NETWORK';
   const vid = process.env.LEITIR_VID ?? '354ILC_NETWORK:10000_UNION';
@@ -24,6 +24,10 @@ async function fetchFresh(): Promise<string> {
   const token = (await res.text()).trim().replace(/^"|"$/g, '');
   cachedToken = token;
   cachedExp = decodeExp(token);
+  try {
+    const { trackEvent } = await import('./telemetry.js');
+    trackEvent('jwt_refreshed', { reason });
+  } catch {}
   return token;
 }
 
