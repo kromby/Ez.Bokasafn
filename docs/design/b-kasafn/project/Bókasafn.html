@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="is">
+<head>
+<meta charset="utf-8">
+<title>Ez.Bokasafn — Hi-fi mockups</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; background: #f0eee9; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel" src="screens/home.jsx"></script>
+<script type="text/babel" src="screens/results.jsx"></script>
+<script type="text/babel" src="screens/detail.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+function Themed({ theme, children }) {
+  return <div className={`theme-${theme}`} style={{ width: 390, height: 844 }}>{children}</div>;
+}
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection id="home" title="Heim" subtitle="Editorial wordmark · library scope · search">
+        <DCArtboard id="home-light" label="Light" width={390} height={844}>
+          <Themed theme="light"><HomeScreen /></Themed>
+        </DCArtboard>
+        <DCArtboard id="home-dark" label="Dark" width={390} height={844}>
+          <Themed theme="dark"><HomeScreen /></Themed>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="results" title="Niðurstöður" subtitle="Tiltækt núna grouping surfaces availability up front">
+        <DCArtboard id="results-light" label="Light" width={390} height={844}>
+          <Themed theme="light"><ResultsScreen /></Themed>
+        </DCArtboard>
+        <DCArtboard id="results-dark" label="Dark" width={390} height={844}>
+          <Themed theme="dark"><ResultsScreen /></Themed>
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="detail" title="Bók" subtitle="Hero with derived tint · branch availability table with call numbers">
+        <DCArtboard id="detail-light" label="Light" width={390} height={844}>
+          <Themed theme="light"><DetailScreen /></Themed>
+        </DCArtboard>
+        <DCArtboard id="detail-dark" label="Dark" width={390} height={844}>
+          <Themed theme="dark"><DetailScreen /></Themed>
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
