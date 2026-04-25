@@ -30,7 +30,9 @@ const toCoverSources = (mmsId: string, isbn?: string): string[] => {
 
 function isPhysicalBook(doc: any): boolean {
   const type = first(doc?.pnx?.display?.type)?.toLowerCase() ?? '';
-  return type === 'book';
+  // Include books, journals, and other physical text resources
+  // Exclude purely digital content (e-books, websites) and non-text (images, videos)
+  return ['book', 'journal', 'newspaper', 'manuscript'].includes(type);
 }
 
 function deliveryToBranches(deliveryDoc: any): {

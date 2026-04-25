@@ -50,7 +50,19 @@
       "Bash(curl -v -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=hringad&lib=CONSORTIUM\")",
       "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=Halldór&lib=CONSORTIUM\")",
       "Bash(curl -v -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM\")",
-      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM\")"
+      "Bash(curl -s -H \"Origin: http://localhost:5174\" \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM\")",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot",
+      "Bash(ALLOWED_ORIGINS=http://localhost:5174 pnpm --filter api dev)",
+      "Bash(tee /tmp/api-logs.txt)",
+      "Bash(curl -s \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM&offset=0\")",
+      "Bash(killall -9 node func)",
+      "Bash(curl -s -H \"Referer: http://localhost:5174/\" \"http://localhost:7071/api/search?q=test&lib=CONSORTIUM&offset=0\")",
+      "Bash(killall -9 func)",
+      "Bash(ALLOWED_ORIGINS=http://localhost:5174 pnpm --filter api start)",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__fill",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__click",
+      "Bash(ALLOWED_ORIGINS=http://localhost:5173 pnpm --filter api start)",
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__evaluate_script"
     ]
   }
 }

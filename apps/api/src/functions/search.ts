@@ -17,7 +17,7 @@ export async function searchHandler(req: HttpRequest, ctx: InvocationContext): P
       delivery(q, lib, offset).catch(() => ({ docs: [] })),
     ]);
     const shaped = shapeSearch(pnxs, delv);
-    ctx.log('search_performed', { lib, qLength: q.length, total: shaped.total });
+    ctx.log('search_performed', { lib, qLength: q.length, total: shaped.total, available: shaped.available.length, onLoan: shaped.onLoan.length });
     return { jsonBody: shaped };
   } catch (e) {
     if (e instanceof HttpError) return { status: e.status, jsonBody: { error: { message: e.message } } };
