@@ -22,4 +22,20 @@ describe('<BookCover>', () => {
     expect(container.querySelector('.cover-art')).toBeTruthy();
     expect(container.querySelector('img')).toBeFalsy();
   });
+
+  it('advances to next source on error and falls through when exhausted', async () => {
+    const { tick } = await import('svelte');
+    const { container } = render(BookCover, {
+      sources: ['bad1', 'bad2'],
+      title: 'X',
+      author: 'Y',
+    });
+    const img = container.querySelector('img')!;
+    img.dispatchEvent(new Event('error'));
+    await tick();
+    expect(container.querySelector('img')?.getAttribute('src')).toBe('bad2');
+    container.querySelector('img')!.dispatchEvent(new Event('error'));
+    await tick();
+    expect(container.querySelector('.cover-art')).toBeTruthy();
+  });
 });

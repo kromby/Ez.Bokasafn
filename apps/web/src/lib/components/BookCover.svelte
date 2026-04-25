@@ -25,7 +25,7 @@
   function hashIndex(s: string, mod: number): number {
     let h = 0;
     for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
-    return Math.abs(h) % mod;
+    return (h >>> 0) % mod;
   }
   const palette = $derived(PALETTES[hashIndex(author ?? title, PALETTES.length)]!);
 </script>
