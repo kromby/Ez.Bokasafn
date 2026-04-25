@@ -125,14 +125,19 @@ export function shapeSearch(pnxs: any, delivery: any): SearchResponse {
 
 // ─── book detail ──────────────────────────────────────────────────
 export function shapeBook(pnxDoc: any, physical: any): BookResponse {
-  const mmsId = first(pnxDoc?.pnx?.control?.recordid) ?? '';
-  const title = first(pnxDoc?.pnx?.display?.title) ?? '(óþekktur titill)';
-  const author = first(pnxDoc?.pnx?.display?.creator) ?? first(pnxDoc?.pnx?.display?.contributor);
-  const year = yearOf(first(pnxDoc?.pnx?.display?.creationdate));
-  const isbn = first(pnxDoc?.pnx?.search?.isbn);
-  const summary = first(pnxDoc?.pnx?.display?.description);
-  const genres: string[] = pnxDoc?.pnx?.display?.subject ?? [];
-  const pageCountRaw = first(pnxDoc?.pnx?.display?.format);
+  // Extract pnx from either parameter, handling both object and array formats
+  const pnxFromDoc = Array.isArray(pnxDoc) ? pnxDoc[0]?.pnx : pnxDoc?.pnx;
+  const pnxFromPhysical = Array.isArray(physical) ? physical[0]?.pnx : physical?.records?.[0]?.pnx;
+  const pnx = pnxFromDoc ?? pnxFromPhysical ?? {};
+
+  const mmsId = first(pnx?.control?.recordid) ?? '';
+  const title = first(pnx?.display?.title) ?? '(óþekktur titill)';
+  const author = first(pnx?.display?.creator) ?? first(pnx?.display?.contributor);
+  const year = yearOf(first(pnx?.display?.creationdate));
+  const isbn = first(pnx?.search?.isbn);
+  const summary = first(pnx?.display?.description);
+  const genres: string[] = pnx?.display?.subject ?? [];
+  const pageCountRaw = first(pnx?.display?.format);
   const pageCount = pageCountRaw ? Number(/\d+/.exec(pageCountRaw)?.[0] ?? '') || undefined : undefined;
   const coverSources = toCoverSources(mmsId, isbn);
 

@@ -17,10 +17,15 @@ async function authedJson(url: string, init: RequestInit = {}): Promise<any> {
   });
   if (!res.ok) {
     const body = await res.text();
-    console.error(`[leitir] ${init.method || 'GET'} -> ${res.status}: ${body.substring(0, 200)}`);
+    console.error(`[leitir] ${init.method || 'GET'} -> ${res.status}`);
+    console.error(`[leitir] URL: ${url}`);
+    console.error(`[leitir] Response: ${body.substring(0, 200)}`);
     throw new HttpError(res.status, `Upstream ${res.status}`);
   }
-  return res.json();
+  const data = await res.json();
+  const dataStr = JSON.stringify(data).substring(0, 300);
+  console.log(`[leitir] ${init.method || 'GET'} -> 200, data: ${dataStr}`);
+  return data;
 }
 
 export interface SuggestRaw { text: string }
@@ -68,12 +73,14 @@ export async function getPhysicalService(mmsId: string): Promise<any> {
     `&recordOwner=${encodeURIComponent(INST())}` +
     `&sourceRecordId=${encodeURIComponent(mmsId)}` +
     `&resource_type=book`;
+  console.log('[leitir] getPhysicalService URL:', url);
   return authedJson(url);
 }
 
 export async function getFullRecord(mmsId: string): Promise<any> {
   const url =
     `${BASE()}/primaws/rest/priv/nz/pnx/P/${encodeURIComponent(mmsId)}` +
-    `?record-institution=354ILC_ALM&lang=is`;
+    `?record-institution=${encodeURIComponent(INST())}&lang=is`;
+  console.log('[leitir] getFullRecord URL:', url);
   return authedJson(url);
 }

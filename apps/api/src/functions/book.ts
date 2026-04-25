@@ -9,9 +9,11 @@ initTelemetry();
 export async function bookHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
     assertAllowedOrigin(req);
-    const mmsId = req.params?.mmsId?.trim();
+    let mmsId = req.params?.mmsId?.trim();
     const lib = req.query.get('lib')?.trim();
     if (!mmsId) return { status: 400, jsonBody: { error: { message: 'missing mmsId' } } };
+
+    mmsId = mmsId.replace(/^alma/, '');
 
     const [pnxDoc, physical] = await Promise.all([getFullRecord(mmsId), getPhysicalService(mmsId)]);
     const shaped = shapeBook(pnxDoc, physical);
