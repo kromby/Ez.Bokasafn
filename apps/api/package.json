@@ -5,7 +5,7 @@
   "type": "module",
   "main": "dist/src/functions/*.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node scripts/copy-function-jsons.js",
     "start": "func start",
     "test": "vitest run",
     "test:watch": "vitest",
