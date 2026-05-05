@@ -46,20 +46,4 @@ functions.forEach((fn) => {
   console.log('');
 });
 
-// Copy staticwebapp.config.json to dist root for Azure Static Web Apps to find runtime config
-console.log('📋 Copying staticwebapp.config.json');
-try {
-  const configPath = join(__dirname, '..', '..', '..', 'staticwebapp.config.json');
-  const distDestPath = join(__dirname, '..', 'dist', 'staticwebapp.config.json');
-  if (!existsSync(configPath)) {
-    throw new Error(`staticwebapp.config.json not found at ${configPath}`);
-  }
-  cpSync(configPath, distDestPath);
-  console.log('  ✓ Copied staticwebapp.config.json to dist/\n');
-  copiedCount++;
-} catch (err) {
-  console.warn(`  ⚠ Failed to copy staticwebapp.config.json: ${err.message}`);
-  // Don't exit - this is a warning, not a critical failure
-}
-
 console.log(`✅ Function deployment setup complete! Processed ${functions.length} functions, copied ${copiedCount} files.`);

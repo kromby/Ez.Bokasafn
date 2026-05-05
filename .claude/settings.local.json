@@ -81,7 +81,9 @@
       "Bash(wait)",
       "Bash(curl -s \"http://localhost:7071/api/search?q=test&lib=test\")",
       "mcp__plugin_context7_context7__resolve-library-id",
-      "mcp__plugin_context7_context7__query-docs"
+      "mcp__plugin_context7_context7__query-docs",
+      "Bash(kill -9 95606)",
+      "Bash(kill -9 9731 9730)"
     ]
   }
 }
