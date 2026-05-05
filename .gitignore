@@ -17,6 +17,9 @@ obj/
 # OS
 .DS_Store
 
+# Claude Code
+.claude/settings.local.json
+
 # Brainstorming companion
 .superpowers/
 
