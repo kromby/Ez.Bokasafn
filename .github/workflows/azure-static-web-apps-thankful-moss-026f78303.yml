@@ -33,9 +33,6 @@ jobs:
           echo "=== API dist directory structure ==="
           find apps/api/dist -maxdepth 2 -type f \( -name '*.json' -o -name '*.js' \) ! -path '*/tests/*' | head -20
           echo ""
-          echo "=== host.json content ==="
-          cat apps/api/dist/host.json
-          echo ""
           echo "=== search/function.json content ==="
           cat apps/api/dist/search/function.json
           echo ""

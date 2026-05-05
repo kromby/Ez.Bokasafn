@@ -43,18 +43,4 @@ functions.forEach((fn) => {
   console.log('');
 });
 
-// Copy host.json to dist root
-console.log('📋 Copying host.json');
-try {
-  if (!existsSync('host.json')) {
-    throw new Error('host.json not found');
-  }
-  cpSync('host.json', 'dist/host.json');
-  console.log('  ✓ Copied host.json to dist/\n');
-  copiedCount++;
-} catch (err) {
-  console.error('  ✗ Failed to copy host.json:', err.message);
-  process.exit(1);
-}
-
 console.log(`✅ Function deployment setup complete! Processed ${functions.length} functions, copied ${copiedCount} files.`);
