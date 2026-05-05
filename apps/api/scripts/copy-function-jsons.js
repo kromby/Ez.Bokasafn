@@ -46,7 +46,7 @@ functions.forEach((fn) => {
 // Copy staticwebapp.config.json to dist root for Azure Static Web Apps to find runtime config
 console.log('📋 Copying staticwebapp.config.json');
 try {
-  const configPath = join('..', 'staticwebapp.config.json');
+  const configPath = join('..', '..', 'staticwebapp.config.json');
   if (!existsSync(configPath)) {
     throw new Error('staticwebapp.config.json not found');
   }
