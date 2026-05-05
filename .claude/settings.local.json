@@ -67,7 +67,11 @@
       "Bash(pkill -f \"pnpm.*dev\")",
       "Bash(pnpm dev *)",
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__press_key",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__wait_for"
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__wait_for",
+      "Bash(curl -v \"http://localhost:7071/api/search?q=kennarinn%20sem&lib=10000_MYLIB&offset=0\" -H \"Origin: http://localhost:5173\")",
+      "Bash(curl -v \"http://localhost:7071/api/search?q=kennarinn%20sem&lib=10000_MYLIB&offset=0\")",
+      "Bash(func settings *)",
+      "Bash(curl -s \"http://localhost:7071/api/search?q=kennarinn%20sem&lib=10000_MYLIB&offset=0\" -H \"Origin: http://localhost:5173\")"
     ]
   }
 }
