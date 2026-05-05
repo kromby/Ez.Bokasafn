@@ -78,7 +78,10 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(npm run *)",
       "Bash(npm --prefix apps/api run build)",
-      "Bash(wait)"
+      "Bash(wait)",
+      "Bash(curl -s \"http://localhost:7071/api/search?q=test&lib=test\")",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs"
     ]
   }
 }
