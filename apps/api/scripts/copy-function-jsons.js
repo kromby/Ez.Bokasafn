@@ -11,7 +11,7 @@ functions.forEach((fn) => {
   console.log(`📦 Processing function: ${fn}`);
 
   const srcJson = join('src', 'functions', fn, 'function.json');
-  const srcJs = join('dist', 'src', 'functions', fn, `${fn}.js`);
+  const srcJs = join('dist', 'src', 'functions', `${fn}.js`);
   const destDir = join('dist', fn);
   const destJson = join(destDir, 'function.json');
   const destJs = join(destDir, `${fn}.js`);
