@@ -71,7 +71,8 @@
       "Bash(func settings *)",
       "Bash(curl -s \"http://localhost:7071/api/search?q=kennarinn%20sem&lib=10000_MYLIB&offset=0\" -H \"Origin: http://localhost:5173\")",
       "Bash(npm ls *)",
-      "Bash(grep -E \"\\\\.\\(json|yaml\\)$\")"
+      "Bash(grep -E \"\\\\.\\(json|yaml\\)$\")",
+      "Bash(grep -E '\\\\.\\(js|json\\)$')"
     ]
   }
 }

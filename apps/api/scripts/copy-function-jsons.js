@@ -14,7 +14,7 @@ functions.forEach((fn) => {
   const srcJs = join('dist', 'src', 'functions', `${fn}.js`);
   const destDir = join('dist', fn);
   const destJson = join(destDir, 'function.json');
-  const destJs = join(destDir, `${fn}.js`);
+  const destJs = join('dist', `${fn}.js`);
 
   try {
     // Create function directory
