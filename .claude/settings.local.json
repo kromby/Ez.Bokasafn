@@ -74,7 +74,11 @@
       "Bash(grep -E \"\\\\.\\(json|yaml\\)$\")",
       "Bash(grep -E '\\\\.\\(js|json\\)$')",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:aka.ms)"
+      "WebFetch(domain:aka.ms)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(npm run *)",
+      "Bash(npm --prefix apps/api run build)",
+      "Bash(wait)"
     ]
   }
 }

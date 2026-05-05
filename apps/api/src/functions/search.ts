@@ -25,4 +25,9 @@ export async function searchHandler(req: HttpRequest, ctx: InvocationContext): P
   }
 }
 
-export default searchHandler;
+app.http('search', {
+  methods: ['GET'],
+  authLevel: 'anonymous',
+  route: 'search',
+  handler: searchHandler
+});
