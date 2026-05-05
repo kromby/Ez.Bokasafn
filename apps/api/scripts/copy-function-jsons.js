@@ -1,5 +1,8 @@
 import { cpSync, mkdirSync, existsSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 console.log('🔧 Starting Azure Functions deployment setup...\n');
 
@@ -10,9 +13,9 @@ let copiedCount = 0;
 functions.forEach((fn) => {
   console.log(`📦 Processing function: ${fn}`);
 
-  const srcJson = join('src', 'functions', fn, 'function.json');
-  const srcJs = join('dist', 'src', 'functions', `${fn}.js`);
-  const destDir = join('dist', fn);
+  const srcJson = join(__dirname, '..', 'src', 'functions', fn, 'function.json');
+  const srcJs = join(__dirname, '..', 'dist', 'src', 'functions', `${fn}.js`);
+  const destDir = join(__dirname, '..', 'dist', fn);
   const destJson = join(destDir, 'function.json');
   const destJs = join(destDir, 'index.js');
 
@@ -46,11 +49,12 @@ functions.forEach((fn) => {
 // Copy staticwebapp.config.json to dist root for Azure Static Web Apps to find runtime config
 console.log('📋 Copying staticwebapp.config.json');
 try {
-  const configPath = join('..', '..', 'staticwebapp.config.json');
+  const configPath = join(__dirname, '..', '..', '..', 'staticwebapp.config.json');
+  const distDestPath = join(__dirname, '..', 'dist', 'staticwebapp.config.json');
   if (!existsSync(configPath)) {
-    throw new Error('staticwebapp.config.json not found');
+    throw new Error(`staticwebapp.config.json not found at ${configPath}`);
   }
-  cpSync(configPath, join('dist', 'staticwebapp.config.json'));
+  cpSync(configPath, distDestPath);
   console.log('  ✓ Copied staticwebapp.config.json to dist/\n');
   copiedCount++;
 } catch (err) {
