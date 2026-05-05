@@ -28,6 +28,19 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build app and API
         run: pnpm build
+      - name: Debug API structure
+        run: |
+          echo "=== API dist directory structure ==="
+          find apps/api/dist -maxdepth 2 -type f \( -name '*.json' -o -name '*.js' \) ! -path '*/tests/*' | head -20
+          echo ""
+          echo "=== host.json content ==="
+          cat apps/api/dist/host.json
+          echo ""
+          echo "=== search/function.json content ==="
+          cat apps/api/dist/search/function.json
+          echo ""
+          echo "=== search.js first 20 lines ==="
+          head -20 apps/api/dist/search.js
       - name: Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
