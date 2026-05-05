@@ -13,6 +13,7 @@ async function authedJson(url: string, init: RequestInit = {}): Promise<any> {
       ...(init.headers ?? {}),
       Authorization: `Bearer ${jwt}`,
       Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   });
   if (!res.ok) {
@@ -63,7 +64,13 @@ export async function delivery(q: string, scope: string, offset: number): Promis
     `&inst=${encodeURIComponent(INST())}` +
     `&scope=${encodeURIComponent(scope)}` +
     `&vid=${encodeURIComponent(VID())}&lang=is&limit=20&offset=${offset}`;
-  return authedJson(url);
+  return authedJson(url, { method: 'POST' });
+}
+
+export async function deliveryByMmsIds(mmsIds: string[], scope: string): Promise<any> {
+  if (!mmsIds || mmsIds.length === 0) return { docs: [] };
+  const url = `${BASE()}/primaws/rest/pub/delivery?inst=${encodeURIComponent(INST())}&scope=${encodeURIComponent(scope)}&vid=${encodeURIComponent(VID())}&lang=is`;
+  return authedJson(url, { method: 'POST', body: JSON.stringify({ mmsIds }) });
 }
 
 export async function getPhysicalService(mmsId: string): Promise<any> {
