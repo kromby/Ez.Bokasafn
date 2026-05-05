@@ -23,4 +23,4 @@ export async function suggestHandler(req: HttpRequest, ctx: InvocationContext): 
   }
 }
 
-app.http('suggest', { route: 'suggest', methods: ['GET'], authLevel: 'anonymous', handler: suggestHandler });
+export default suggestHandler;

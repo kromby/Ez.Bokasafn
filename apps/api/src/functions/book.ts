@@ -28,4 +28,4 @@ export async function bookHandler(req: HttpRequest, ctx: InvocationContext): Pro
   }
 }
 
-app.http('book', { route: 'book/{mmsId}', methods: ['GET'], authLevel: 'anonymous', handler: bookHandler });
+export default bookHandler;
