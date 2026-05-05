@@ -39,8 +39,8 @@ jobs:
           echo "=== search/function.json content ==="
           cat apps/api/dist/search/function.json
           echo ""
-          echo "=== search.js first 20 lines ==="
-          head -20 apps/api/dist/search.js
+          echo "=== search/index.js first 20 lines ==="
+          head -20 apps/api/dist/search/index.js
       - name: Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
