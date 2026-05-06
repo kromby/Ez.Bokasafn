@@ -5,7 +5,7 @@ import { assertAllowedOrigin } from '../lib/originCheck.js';
 import { HttpError } from '../lib/errors.js';
 import { initTelemetry, trackEvent } from '../lib/telemetry.js';
 
-console.log('🔍 Search function loading...');
+console.log('🔍 Search function module loaded');
 initTelemetry();
 console.log('🔍 Telemetry initialized');
 
@@ -24,7 +24,8 @@ export async function searchHandler(req: HttpRequest, ctx: InvocationContext): P
   } catch (e) {
     if (e instanceof HttpError) return { status: e.status, jsonBody: { error: { message: e.message } } };
     ctx.log('error', e);
-    return { status: 502, jsonBody: { error: { message: 'upstream failure' } } };
+    const errMsg = e instanceof Error ? e.message : String(e);
+    return { status: 502, jsonBody: { error: { message: 'upstream failure', details: errMsg } } };
   }
 }
 
