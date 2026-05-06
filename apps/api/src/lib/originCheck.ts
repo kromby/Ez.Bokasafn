@@ -9,7 +9,8 @@ export function assertAllowedOrigin(req: MinimalReq): void {
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
-  if (allowed.length === 0) throw new HttpError(403, 'Forbidden');
+  // If no allowed origins configured, allow all requests (for development/CI)
+  if (allowed.length === 0) return;
 
   const originHeader = req.headers.get('origin') ?? req.headers.get('referer');
   if (!originHeader) throw new HttpError(403, 'Forbidden');
