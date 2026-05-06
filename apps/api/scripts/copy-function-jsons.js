@@ -19,6 +19,27 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
+// Copy node_modules for runtime dependencies (@azure/functions, applicationinsights)
+const srcNodeModules = join(__dirname, '..', 'node_modules');
+const destNodeModules = join(__dirname, '..', 'dist', 'node_modules');
+
+if (existsSync(srcNodeModules)) {
+  console.log('📦 Copying node_modules for runtime dependencies...');
+  const requiredModules = ['@azure', 'applicationinsights'];
+
+  for (const moduleName of requiredModules) {
+    const srcModule = join(srcNodeModules, moduleName);
+    const destModule = join(destNodeModules, moduleName);
+
+    if (existsSync(srcModule)) {
+      mkdirSync(destNodeModules, { recursive: true });
+      cpSync(srcModule, destModule, { recursive: true, force: true, dereference: true });
+      console.log(`  ✓ Copied ${moduleName}`);
+      copiedCount++;
+    }
+  }
+}
+
 // Copy function.json files and flatten structure for Azure Static Web Apps
 functions.forEach((fn) => {
   console.log(`📦 Processing function: ${fn}`);

@@ -83,7 +83,8 @@
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
       "Bash(kill -9 95606)",
-      "Bash(kill -9 9731 9730)"
+      "Bash(kill -9 9731 9730)",
+      "Bash(gh run *)"
     ]
   }
 }
