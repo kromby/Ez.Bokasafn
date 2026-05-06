@@ -20,30 +20,22 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Copy node_modules for runtime dependencies (@azure/functions, applicationinsights)
-const srcNodeModules = join(__dirname, '..', 'node_modules');
-const destNodeModules = join(__dirname, '..', 'dist', 'node_modules');
+// Copy package.json so Azure can install dependencies
+const srcPackageJson = join(__dirname, '..', 'package.json');
+const destPackageJson = join(__dirname, '..', 'dist', 'package.json');
+const srcPnpmLock = join(__dirname, '..', '..', '..', 'pnpm-lock.yaml');
+const destPnpmLock = join(__dirname, '..', 'dist', 'pnpm-lock.yaml');
 
-if (existsSync(srcNodeModules)) {
-  console.log('📦 Copying node_modules for runtime dependencies...');
-  const requiredModules = ['@azure', 'applicationinsights'];
+if (existsSync(srcPackageJson)) {
+  cpSync(srcPackageJson, destPackageJson);
+  console.log('📦 Copied package.json');
+  copiedCount++;
+}
 
-  mkdirSync(destNodeModules, { recursive: true });
-
-  for (const moduleName of requiredModules) {
-    const srcModule = join(srcNodeModules, moduleName);
-    const destModule = join(destNodeModules, moduleName);
-
-    if (existsSync(srcModule)) {
-      try {
-        execSync(`cp -RL "${srcModule}" "${destModule}"`, { stdio: 'pipe' });
-        console.log(`  ✓ Copied ${moduleName}`);
-        copiedCount++;
-      } catch (err) {
-        console.error(`  ✗ Failed to copy ${moduleName}: ${err.message}`);
-      }
-    }
-  }
+if (existsSync(srcPnpmLock)) {
+  cpSync(srcPnpmLock, destPnpmLock);
+  console.log('📦 Copied pnpm-lock.yaml');
+  copiedCount++;
 }
 
 // Copy function.json files and flatten structure for Azure Static Web Apps
