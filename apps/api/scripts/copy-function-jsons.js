@@ -1,6 +1,7 @@
 import { cpSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -27,15 +28,20 @@ if (existsSync(srcNodeModules)) {
   console.log('📦 Copying node_modules for runtime dependencies...');
   const requiredModules = ['@azure', 'applicationinsights'];
 
+  mkdirSync(destNodeModules, { recursive: true });
+
   for (const moduleName of requiredModules) {
     const srcModule = join(srcNodeModules, moduleName);
     const destModule = join(destNodeModules, moduleName);
 
     if (existsSync(srcModule)) {
-      mkdirSync(destNodeModules, { recursive: true });
-      cpSync(srcModule, destModule, { recursive: true, force: true, dereference: true });
-      console.log(`  ✓ Copied ${moduleName}`);
-      copiedCount++;
+      try {
+        execSync(`cp -RL "${srcModule}" "${destModule}"`, { stdio: 'pipe' });
+        console.log(`  ✓ Copied ${moduleName}`);
+        copiedCount++;
+      } catch (err) {
+        console.error(`  ✗ Failed to copy ${moduleName}: ${err.message}`);
+      }
     }
   }
 }
