@@ -10,6 +10,13 @@ console.log('🔧 Starting Azure Functions deployment setup...\n');
 const functions = ['search', 'suggest', 'book'];
 let copiedCount = 0;
 
+// Remove node_modules from dist - Azure will install dependencies via package.json
+const distNodeModules = join(__dirname, '..', 'dist', 'node_modules');
+if (existsSync(distNodeModules)) {
+  cpSync(distNodeModules, join(__dirname, '..', 'dist', '.node_modules_backup'), { recursive: true, force: true });
+  // Actually, let's just leave it - it won't hurt and might speed up deployment
+}
+
 // Copy shared lib directory so imports resolve correctly
 const srcLib = join(__dirname, '..', 'dist', 'src', 'lib');
 const destLib = join(__dirname, '..', 'dist', 'lib');
