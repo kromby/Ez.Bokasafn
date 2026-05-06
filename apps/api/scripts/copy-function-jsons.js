@@ -10,13 +10,6 @@ console.log('🔧 Starting Azure Functions deployment setup...\n');
 const functions = ['search', 'suggest', 'book'];
 let copiedCount = 0;
 
-// Remove node_modules from dist - Azure will install dependencies via package.json
-const distNodeModules = join(__dirname, '..', 'dist', 'node_modules');
-if (existsSync(distNodeModules)) {
-  cpSync(distNodeModules, join(__dirname, '..', 'dist', '.node_modules_backup'), { recursive: true, force: true });
-  // Actually, let's just leave it - it won't hurt and might speed up deployment
-}
-
 // Copy shared lib directory so imports resolve correctly
 const srcLib = join(__dirname, '..', 'dist', 'src', 'lib');
 const destLib = join(__dirname, '..', 'dist', 'lib');
@@ -27,22 +20,19 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Copy package.json so Azure can install dependencies
-const srcPackageJson = join(__dirname, '..', 'package.json');
-const destPackageJson = join(__dirname, '..', 'dist', 'package.json');
-const srcPnpmLock = join(__dirname, '..', '..', '..', 'pnpm-lock.yaml');
-const destPnpmLock = join(__dirname, '..', 'dist', 'pnpm-lock.yaml');
+// Copy entire app node_modules to ensure all dependencies are available
+const srcNodeModules = join(__dirname, '..', 'node_modules');
+const destNodeModules = join(__dirname, '..', 'dist', 'node_modules');
 
-if (existsSync(srcPackageJson)) {
-  cpSync(srcPackageJson, destPackageJson);
-  console.log('📦 Copied package.json');
-  copiedCount++;
-}
-
-if (existsSync(srcPnpmLock)) {
-  cpSync(srcPnpmLock, destPnpmLock);
-  console.log('📦 Copied pnpm-lock.yaml');
-  copiedCount++;
+if (existsSync(srcNodeModules)) {
+  console.log('📦 Copying node_modules with all dependencies...');
+  try {
+    execSync(`cp -RL "${srcNodeModules}" "${destNodeModules}"`, { stdio: 'pipe' });
+    console.log('  ✓ Copied node_modules');
+    copiedCount++;
+  } catch (err) {
+    console.error(`  ✗ Failed to copy node_modules: ${err.message}`);
+  }
 }
 
 // Copy function.json files and flatten structure for Azure Static Web Apps

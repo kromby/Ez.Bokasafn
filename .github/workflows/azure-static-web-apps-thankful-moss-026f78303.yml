@@ -51,7 +51,7 @@ jobs:
           api_location: "./apps/api/dist" # Api source code path
           config_file_location: "./" # Location of staticwebapp.config.json
           skip_app_build: true
-          skip_api_build: false
+          skip_api_build: true
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
