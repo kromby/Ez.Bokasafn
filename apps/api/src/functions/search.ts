@@ -4,7 +4,10 @@ import { shapeSearch } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
 import { HttpError } from '../lib/errors.js';
 import { initTelemetry, trackEvent } from '../lib/telemetry.js';
+
+console.log('🔍 Search function loading...');
 initTelemetry();
+console.log('🔍 Telemetry initialized');
 
 export async function searchHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
