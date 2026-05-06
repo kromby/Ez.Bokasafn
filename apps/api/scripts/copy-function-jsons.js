@@ -9,6 +9,16 @@ console.log('🔧 Starting Azure Functions deployment setup...\n');
 const functions = ['search', 'suggest', 'book'];
 let copiedCount = 0;
 
+// Copy shared lib directory so imports resolve correctly
+const srcLib = join(__dirname, '..', 'dist', 'src', 'lib');
+const destLib = join(__dirname, '..', 'dist', 'lib');
+
+if (existsSync(srcLib)) {
+  cpSync(srcLib, destLib, { recursive: true, force: true });
+  console.log('📦 Copied shared lib directory');
+  copiedCount++;
+}
+
 // Copy function.json files and flatten structure for Azure Static Web Apps
 functions.forEach((fn) => {
   console.log(`📦 Processing function: ${fn}`);
