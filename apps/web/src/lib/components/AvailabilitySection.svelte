@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import type { Book } from '@ez-bokasafn/types';
   import ResultRow from './ResultRow.svelte';
 

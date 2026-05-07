@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import { onDestroy } from 'svelte';
@@ -9,8 +9,8 @@
   import SearchHeader from '$lib/components/SearchHeader.svelte';
   import AvailabilitySection from '$lib/components/AvailabilitySection.svelte';
 
-  let result = $state<SearchResponse | null>(null);
-  let error = $state<string | null>(null);
+  let result: SearchResponse | null = $state(null);
+  let error: string | null = $state(null);
   let loading = $state(false);
   let controller: AbortController | undefined;
 

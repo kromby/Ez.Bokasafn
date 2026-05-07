@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   let { onShare }: { onShare: () => void } = $props();
 
   function back() {

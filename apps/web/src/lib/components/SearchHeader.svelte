@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import LibraryScopePicker from './LibraryScopePicker.svelte';
 
   let { value, total }: { value: string; total?: number } = $props();

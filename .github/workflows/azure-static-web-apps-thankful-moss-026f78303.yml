@@ -27,13 +27,6 @@ jobs:
         run: npm ci
       - name: Build app and API
         run: npm run build -ws
-      - name: Build web app
-        continue-on-error: true
-        run: |
-          cd apps/web
-          npm install
-          npm run build
-          exit 0
       - name: Debug API structure
         run: |
           echo "=== API dist directory structure ==="

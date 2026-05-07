@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { page } from '$app/stores';
   import { libraryScope } from '$lib/stores.js';
   import { apiBook, ApiError } from '$lib/api.js';

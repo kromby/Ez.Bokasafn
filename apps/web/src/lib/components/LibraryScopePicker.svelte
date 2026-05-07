@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { libraryScope, setLibraryScope } from '$lib/stores.js';
   import { LIBRARY_SCOPES } from '$lib/scopes.js';
 
