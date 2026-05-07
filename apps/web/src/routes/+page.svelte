@@ -3,9 +3,9 @@
   import { libraryScope } from '$lib/stores.js';
   import LibraryScopePicker from '$lib/components/LibraryScopePicker.svelte';
 
-  let q = $state('');
+  let q = '';
 
-  function submit(e: SubmitEvent) {
+  function submit(e) {
     e.preventDefault();
     const trimmed = q.trim();
     if (!trimmed) return;
