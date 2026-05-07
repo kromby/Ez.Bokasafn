@@ -12,9 +12,7 @@
     "test:e2e": "playwright test",
     "typecheck": "svelte-check --tsconfig ./tsconfig.json"
   },
-  "dependencies": {
-    "@ez-bokasafn/types": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@playwright/test": "^1.47.2",
     "@sveltejs/adapter-static": "^3.0.5",
