@@ -59,4 +59,20 @@ functions.forEach((fn) => {
   console.log('');
 });
 
+// Write a clean package.json for deployment — Oryx needs engines.node to detect the runtime,
+// and workspace:* dependencies must be stripped (pnpm syntax not understood by npm/Oryx).
+const srcPkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'));
+const deployPkg = {
+  name: srcPkg.name,
+  version: srcPkg.version,
+  private: true,
+  type: srcPkg.type,
+  engines: { node: '22' },
+  dependencies: Object.fromEntries(
+    Object.entries(srcPkg.dependencies ?? {}).filter(([, v]) => !String(v).startsWith('workspace:'))
+  ),
+};
+writeFileSync(join(__dirname, '..', 'dist', 'package.json'), JSON.stringify(deployPkg, null, 2));
+console.log('📦 Wrote clean deployment package.json');
+
 console.log(`✅ Function deployment setup complete! Processed ${functions.length} functions, copied ${copiedCount} files.`);
