@@ -19,13 +19,12 @@ jobs:
         with:
           submodules: true
           lfs: false
-      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
+          cache: npm
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       - name: Build app and API
         run: pnpm build
       - name: Debug API structure
