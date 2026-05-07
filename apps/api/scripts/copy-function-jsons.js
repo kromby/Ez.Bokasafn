@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, existsSync } from 'fs';
+import { cpSync, mkdirSync, existsSync, readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
@@ -20,14 +20,14 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Copy entire app node_modules to ensure all dependencies are available
-const srcNodeModules = join(__dirname, '..', 'node_modules');
-const destNodeModules = join(__dirname, '..', 'dist', 'node_modules');
+// Copy .pnpm folder and node_modules from root workspace
+const distNodeModules = join(__dirname, '..', 'dist', 'node_modules');
+const rootNodeModules = join(__dirname, '..', '..', '..', 'node_modules');
 
-if (existsSync(srcNodeModules)) {
-  console.log('📦 Copying node_modules with all dependencies...');
+if (existsSync(rootNodeModules)) {
+  console.log('📦 Copying workspace node_modules to dist...');
   try {
-    execSync(`cp -RL "${srcNodeModules}" "${destNodeModules}"`, { stdio: 'pipe' });
+    cpSync(rootNodeModules, distNodeModules, { recursive: true, force: true });
     console.log('  ✓ Copied node_modules');
     copiedCount++;
   } catch (err) {
