@@ -67,6 +67,7 @@ const deployPkg = {
   version: srcPkg.version,
   private: true,
   type: srcPkg.type,
+  main: `{${functions.join(',')}}\/index.js`,
   engines: { node: '22' },
   dependencies: Object.fromEntries(
     Object.entries(srcPkg.dependencies ?? {}).filter(([, v]) => !String(v).startsWith('workspace:'))
