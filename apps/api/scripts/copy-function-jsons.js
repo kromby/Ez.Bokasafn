@@ -20,20 +20,8 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Copy .pnpm folder and node_modules from root workspace
-const distNodeModules = join(__dirname, '..', 'dist', 'node_modules');
-const rootNodeModules = join(__dirname, '..', '..', '..', 'node_modules');
-
-if (existsSync(rootNodeModules)) {
-  console.log('📦 Copying workspace node_modules to dist...');
-  try {
-    cpSync(rootNodeModules, distNodeModules, { recursive: true, force: true });
-    console.log('  ✓ Copied node_modules');
-    copiedCount++;
-  } catch (err) {
-    console.error(`  ✗ Failed to copy node_modules: ${err.message}`);
-  }
-}
+// Azure will install node_modules from package.json and pnpm-lock.yaml at runtime,
+// so we don't need to copy them and risk broken symlinks in the deployment artifact.
 
 // Copy function.json files and flatten structure for Azure Static Web Apps
 functions.forEach((fn) => {
