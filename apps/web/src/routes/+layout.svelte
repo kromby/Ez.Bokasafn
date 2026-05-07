@@ -1,7 +1,7 @@
 <script>
   import '../app.css';
   import { onMount } from 'svelte';
-  import { maybeInjectCfWebAnalytics } from '$lib/analytics.js';
+  import { maybeInjectCfWebAnalytics } from '$lib/analytics';
   export let children;
   onMount(() => maybeInjectCfWebAnalytics());
 </script>

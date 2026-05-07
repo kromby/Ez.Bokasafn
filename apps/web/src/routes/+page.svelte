@@ -1,6 +1,6 @@
 <script>
   import { goto } from '$app/navigation';
-  import { libraryScope } from '$lib/stores.js';
+  import { libraryScope } from '$lib/stores';
   import LibraryScopePicker from '$lib/components/LibraryScopePicker.svelte';
 
   let q = '';

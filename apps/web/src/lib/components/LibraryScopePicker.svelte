@@ -1,6 +1,6 @@
-<script>
-  import { libraryScope, setLibraryScope } from '$lib/stores.js';
-  import { LIBRARY_SCOPES } from '$lib/scopes.js';
+<script lang="ts">
+  import { libraryScope, setLibraryScope } from '$lib/stores';
+  import { LIBRARY_SCOPES } from '$lib/scopes';
 
   let open = $state(false);
   const selected = $derived($libraryScope);

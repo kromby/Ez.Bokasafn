@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores';
-  import { libraryScope } from '$lib/stores.js';
-  import { apiBook, ApiError } from '$lib/api.js';
+  import { libraryScope } from '$lib/stores';
+  import { apiBook, ApiError } from '$lib/api';
   import type { BookResponse } from '@ez-bokasafn/types';
   import BookCover from '$lib/components/BookCover.svelte';
   import BranchTable from '$lib/components/BranchTable.svelte';

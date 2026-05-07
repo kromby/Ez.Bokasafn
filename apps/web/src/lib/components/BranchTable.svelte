@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import type { BranchAvailability } from '@ez-bokasafn/types';
-  export let branches;
+  let { branches } = $props();
   const onShelf = $derived(branches.filter((b) => b.status === 'on-shelf').length);
 </script>
 

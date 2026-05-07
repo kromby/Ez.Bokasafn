@@ -1,10 +1,5 @@
-<script>
-  let {
-    sources,
-    title,
-    author,
-    large = false,
-  }: { sources: string[]; title: string; author?: string; large?: boolean } = $props();
+<script lang="ts">
+  let { sources, title, author = undefined, large = false } = $props();
 
   let attempt = $state(0);
   const exhausted = $derived(attempt >= sources.length);

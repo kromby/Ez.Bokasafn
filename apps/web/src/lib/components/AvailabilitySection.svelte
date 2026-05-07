@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import type { Book } from '@ez-bokasafn/types';
   import ResultRow from './ResultRow.svelte';
 
-  export let books, kind;
+  let { books, kind } = $props();
 
   const labels = {
     avail: { head: 'Laus', pill: (n: number) => `${n} á hillunni` },

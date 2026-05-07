@@ -11,6 +11,6 @@ export default {
       precompress: false,
       strict: false,
     }),
-    prerender: { entries: [] },
+    prerender: { entries: ['/'] },
   },
 };

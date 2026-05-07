@@ -1,18 +1,18 @@
-<script>
+<script lang="ts">
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import { onDestroy } from 'svelte';
-  import { libraryScope, setLibraryScope } from '$lib/stores.js';
-  import { LIBRARY_SCOPES } from '$lib/scopes.js';
-  import { apiSearch, ApiError } from '$lib/api.js';
+  import { libraryScope, setLibraryScope } from '$lib/stores';
+  import { LIBRARY_SCOPES } from '$lib/scopes';
+  import { apiSearch, ApiError } from '$lib/api';
   import type { SearchResponse } from '@ez-bokasafn/types';
   import SearchHeader from '$lib/components/SearchHeader.svelte';
   import AvailabilitySection from '$lib/components/AvailabilitySection.svelte';
 
-  let result: SearchResponse | null = $state(null);
-  let error: string | null = $state(null);
+  let result = $state<SearchResponse | null>(null);
+  let error = $state<string | null>(null);
   let loading = $state(false);
-  let controller: AbortController | undefined;
+  let controller = undefined as AbortController | undefined;
 
   $effect(() => {
     const q = $page.url.searchParams.get('q') ?? '';

@@ -96,7 +96,9 @@
       "Bash(ALLOWED_ORIGINS=http://localhost:5173 npm start)",
       "Bash(npm cache *)",
       "Bash(npm ci *)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(NODE_DEBUG=* npm run build)",
+      "Bash(NODE_OPTIONS=\"--trace-uncaught\" npm run build)"
     ]
   }
 }

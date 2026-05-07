@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import type { Book } from '@ez-bokasafn/types';
   import BookCover from './BookCover.svelte';
 
-  export let book, kind;
+  let { book, kind } = $props();
 
   const branchesShown = $derived(book.branchesOnShelf.slice(0, 3));
   const overflow = $derived(book.branchesOnShelf.length - branchesShown.length);
