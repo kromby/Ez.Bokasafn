@@ -20,8 +20,23 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Azure will install node_modules from package.json and pnpm-lock.yaml at runtime,
-// so we don't need to copy them and risk broken symlinks in the deployment artifact.
+// Copy workspace package (@ez-bokasafn/types) from node_modules
+// since it's a workspace dependency that Azure won't be able to install
+const workspacePkg = '@ez-bokasafn';
+const srcWorkspacePath = join(__dirname, '..', '..', '..', 'node_modules', workspacePkg);
+const destWorkspacePath = join(__dirname, '..', 'dist', 'node_modules', workspacePkg);
+
+if (existsSync(srcWorkspacePath)) {
+  console.log('📦 Copying workspace package dependencies...');
+  try {
+    mkdirSync(join(__dirname, '..', 'dist', 'node_modules'), { recursive: true });
+    cpSync(srcWorkspacePath, destWorkspacePath, { recursive: true, force: true });
+    console.log('  ✓ Copied @ez-bokasafn package');
+    copiedCount++;
+  } catch (err) {
+    console.error(`  ✗ Failed to copy workspace packages: ${err.message}`);
+  }
+}
 
 // Copy function.json files and flatten structure for Azure Static Web Apps
 functions.forEach((fn) => {
