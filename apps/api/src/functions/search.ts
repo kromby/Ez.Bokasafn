@@ -9,7 +9,7 @@ console.log('🔍 Search function module loaded');
 initTelemetry();
 console.log('🔍 Telemetry initialized');
 
-export default async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
+async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
     assertAllowedOrigin(req);
     const q = req.query.get('q')?.trim();
@@ -28,3 +28,5 @@ export default async function handler(req: HttpRequest, ctx: InvocationContext):
     return { status: 502, jsonBody: { error: { message: 'upstream failure', details: errMsg } } };
   }
 }
+
+export default handler;
