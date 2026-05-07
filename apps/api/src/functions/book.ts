@@ -1,4 +1,4 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { getFullRecord, getPhysicalService } from '../lib/leitir.js';
 import { shapeBook } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
@@ -6,7 +6,7 @@ import { HttpError } from '../lib/errors.js';
 import { initTelemetry, trackEvent } from '../lib/telemetry.js';
 initTelemetry();
 
-export async function bookHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
+export default async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
     assertAllowedOrigin(req);
     let mmsId = req.params?.mmsId?.trim();
@@ -27,10 +27,3 @@ export async function bookHandler(req: HttpRequest, ctx: InvocationContext): Pro
     return { status: 502, jsonBody: { error: { message: 'upstream failure' } } };
   }
 }
-
-app.http('book', {
-  methods: ['GET'],
-  authLevel: 'anonymous',
-  route: 'book/{mmsId}',
-  handler: bookHandler
-});

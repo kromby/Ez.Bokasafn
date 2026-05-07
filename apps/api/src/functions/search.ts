@@ -1,4 +1,4 @@
-import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { search } from '../lib/leitir.js';
 import { shapeSearch } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
@@ -9,7 +9,7 @@ console.log('🔍 Search function module loaded');
 initTelemetry();
 console.log('🔍 Telemetry initialized');
 
-export async function searchHandler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
+export default async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
     assertAllowedOrigin(req);
     const q = req.query.get('q')?.trim();
@@ -28,10 +28,3 @@ export async function searchHandler(req: HttpRequest, ctx: InvocationContext): P
     return { status: 502, jsonBody: { error: { message: 'upstream failure', details: errMsg } } };
   }
 }
-
-app.http('search', {
-  methods: ['GET'],
-  authLevel: 'anonymous',
-  route: 'search',
-  handler: searchHandler
-});
