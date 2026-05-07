@@ -87,7 +87,8 @@
       "Bash(gh run *)",
       "Bash(curl -s \"https://thankful-moss-026f78303.7.azurestaticapps.net/api/search?q=kennarinn&lib=sem\")",
       "Bash(curl -v \"https://thankful-moss-026f78303.7.azurestaticapps.net/api/search?q=kennarinn&lib=sem\")",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "Bash(gh workflow *)"
     ]
   }
 }

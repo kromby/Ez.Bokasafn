@@ -1,3 +1,4 @@
 {
-  "scriptFile": "./index.js"
+  "scriptFile": "./index.js",
+  "bindings": []
 }
