@@ -9,6 +9,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
+    "build": "true",
     "typecheck": "tsc --noEmit"
   }
 }
