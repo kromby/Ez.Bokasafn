@@ -7,13 +7,10 @@ export default {
     adapter: adapter({
       pages: 'build',
       assets: 'build',
-      fallback: 'index.html', // SPA fallback
+      fallback: 'index.html',
       precompress: false,
       strict: false,
     }),
     prerender: { entries: [] },
-    alias: {
-      '@ez-bokasafn/types': '../../packages/types/src/index.ts',
-    },
   },
 };

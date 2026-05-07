@@ -2,7 +2,7 @@
   import type { Book } from '@ez-bokasafn/types';
   import ResultRow from './ResultRow.svelte';
 
-  let { books, kind }: { books: Book[]; kind: 'avail' | 'loan' } = $props();
+  export let books, kind;
 
   const labels = {
     avail: { head: 'Laus', pill: (n: number) => `${n} á hillunni` },

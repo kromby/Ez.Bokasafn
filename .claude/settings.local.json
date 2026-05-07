@@ -95,7 +95,8 @@
       "Bash(npm install *)",
       "Bash(ALLOWED_ORIGINS=http://localhost:5173 npm start)",
       "Bash(npm cache *)",
-      "Bash(npm ci *)"
+      "Bash(npm ci *)",
+      "Bash(grep *)"
     ]
   }
 }

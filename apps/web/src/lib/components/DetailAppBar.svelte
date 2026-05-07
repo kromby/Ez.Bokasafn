@@ -1,5 +1,5 @@
 <script>
-  let { onShare }: { onShare: () => void } = $props();
+  export let onShare;
 
   function back() {
     if (history.length > 1) history.back();

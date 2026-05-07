@@ -1,7 +1,8 @@
 <script>
   import LibraryScopePicker from './LibraryScopePicker.svelte';
 
-  let { value, total }: { value: string; total?: number } = $props();
+  let value = $props.value;
+  let total = $props.total;
 </script>
 
 <div class="head">

@@ -2,7 +2,7 @@
   import '../app.css';
   import { onMount } from 'svelte';
   import { maybeInjectCfWebAnalytics } from '$lib/analytics.js';
-  let { children } = $props();
+  export let children;
   onMount(() => maybeInjectCfWebAnalytics());
 </script>
 
