@@ -20,36 +20,7 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Copy node_modules for runtime dependencies
-// Include workspace packages and all production dependencies needed by Azure Functions
-const distNodeModules = join(__dirname, '..', 'dist', 'node_modules');
-const rootNodeModules = join(__dirname, '..', '..', '..', 'node_modules');
-
-if (existsSync(rootNodeModules)) {
-  console.log('📦 Copying production dependencies to dist...');
-  try {
-    mkdirSync(distNodeModules, { recursive: true });
-    // Copy node_modules structure, excluding dev-only packages
-    const packages = ['@azure', '@ez-bokasafn', 'applicationinsights'];
-    packages.forEach(pkg => {
-      const src = join(rootNodeModules, pkg);
-      const dest = join(distNodeModules, pkg);
-      if (existsSync(src)) {
-        cpSync(src, dest, { recursive: true, force: true });
-      }
-    });
-    // Also copy .pnpm directory for pnpm compatibility
-    const pnpmSrc = join(rootNodeModules, '.pnpm');
-    const pnpmDest = join(distNodeModules, '.pnpm');
-    if (existsSync(pnpmSrc)) {
-      cpSync(pnpmSrc, pnpmDest, { recursive: true, force: true });
-    }
-    console.log('  ✓ Copied dependencies');
-    copiedCount++;
-  } catch (err) {
-    console.error(`  ✗ Failed to copy dependencies: ${err.message}`);
-  }
-}
+// npm will install dependencies from package.json and package-lock.json at runtime
 
 // Copy function.json files and flatten structure for Azure Static Web Apps
 functions.forEach((fn) => {

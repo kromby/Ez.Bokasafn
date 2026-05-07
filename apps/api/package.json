@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@azure/functions": "^4.6.0",
-    "@ez-bokasafn/types": "workspace:*",
     "applicationinsights": "^3.4.0"
   },
   "devDependencies": {

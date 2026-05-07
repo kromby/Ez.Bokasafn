@@ -91,7 +91,9 @@
       "Bash(gh workflow *)",
       "Bash(mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page *)",
       "Bash(chmod +x /tmp/check_test.sh)",
-      "Bash(/tmp/check_test.sh)"
+      "Bash(/tmp/check_test.sh)",
+      "Bash(func start *)",
+      "Bash(pkill -9 -f \"func start\")"
     ]
   }
 }
