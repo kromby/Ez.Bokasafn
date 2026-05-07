@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build app and API
-        run: pnpm build
+        run: npm run build -ws
       - name: Debug API structure
         run: |
           echo "=== API dist directory structure ==="
@@ -50,7 +50,7 @@ jobs:
           api_location: "./apps/api/dist" # Api source code path
           config_file_location: "./" # Location of staticwebapp.config.json
           skip_app_build: true
-          skip_api_build: true
+          skip_api_build: false
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

@@ -11,7 +11,7 @@ Ez Bokasafn (Easy Library) is an alternative interface to leitir.is, the unified
 - **Frontend:** [SvelteKit](https://kit.svelte.dev/) + [Vite](https://vitejs.dev/) + TypeScript
 - **Backend:** [Azure Functions](https://azure.microsoft.com/services/functions/) + Node.js
 - **Testing:** [Vitest](https://vitest.dev/) (unit), [Playwright](https://playwright.dev/) (E2E)
-- **Package Manager:** [pnpm](https://pnpm.io/)
+- **Package Manager:** [npm](https://www.npmjs.com/)
 - **Monorepo:** Workspace packages with shared types
 
 ## Project Structure
@@ -32,22 +32,22 @@ Ez Bokasafn (Easy Library) is an alternative interface to leitir.is, the unified
 ### Prerequisites
 
 - **Node.js** 18+
-- **pnpm** 9+
+- **npm** 10+
 
 ### Setup
 
 1. Install dependencies:
    ```bash
-   pnpm install
+   npm install
    ```
 
 2. Run development servers:
    ```bash
    # Terminal 1: Web frontend
-   pnpm dev:web
+   npm run dev:web
 
    # Terminal 2: API backend
-   pnpm dev:api
+   npm run dev:api
    ```
 
 The web app runs at `http://localhost:5173` and the API at `http://localhost:7071`.
@@ -56,33 +56,31 @@ The web app runs at `http://localhost:5173` and the API at `http://localhost:707
 
 | Command | Description |
 |---------|-------------|
-| `pnpm dev:web` | Start SvelteKit dev server |
-| `pnpm dev:api` | Start Azure Functions emulator |
-| `pnpm build` | Build all packages |
-| `pnpm test` | Run all tests once |
-| `pnpm typecheck` | Run TypeScript type checking |
+| `npm run dev:web` | Start SvelteKit dev server |
+| `npm run dev:api` | Start Azure Functions emulator |
+| `npm run build` | Build all packages |
+| `npm test` | Run all tests once |
+| `npm run typecheck` | Run TypeScript type checking |
 
 ### Web App
 
 ```bash
-cd apps/web
-pnpm dev          # Development server
-pnpm build        # Production build
-pnpm preview      # Preview production build
-pnpm test         # Run unit tests
-pnpm test:watch   # Watch mode for tests
-pnpm test:e2e     # Run Playwright E2E tests
-pnpm typecheck    # Type check with Svelte
+npm run dev:web          # Development server
+npm run build -w web     # Production build
+npm run preview -w web   # Preview production build
+npm test -w web          # Run unit tests
+npm run test:watch -w web # Watch mode for tests
+npm run test:e2e -w web  # Run Playwright E2E tests
+npm run typecheck -w web # Type check with Svelte
 ```
 
 ### API
 
 ```bash
-cd apps/api
-pnpm start        # Development server (Azure Functions emulator)
-pnpm build        # Compile TypeScript
-pnpm test         # Run unit tests
-pnpm typecheck    # Type check
+npm run dev:api      # Development server (Azure Functions emulator)
+npm run build -w api # Compile TypeScript
+npm test -w api      # Run unit tests
+npm run typecheck -w api # Type check
 ```
 
 ## Architecture
