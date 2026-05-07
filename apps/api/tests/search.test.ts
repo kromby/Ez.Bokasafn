@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { searchHandler } from '../src/functions/search.js';
+import searchHandler from '../src/functions/search.js';
 import { __resetJwtCacheForTests } from '../src/lib/jwtCache.js';
 
 const here = dirname(fileURLToPath(import.meta.url));

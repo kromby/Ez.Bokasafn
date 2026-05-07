@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { suggestHandler } from '../src/functions/suggest.js';
+import suggestHandler from '../src/functions/suggest.js';
 import { __resetJwtCacheForTests } from '../src/lib/jwtCache.js';
 
 function fakeJwt(): string {
