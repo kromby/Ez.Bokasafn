@@ -20,21 +20,34 @@ if (existsSync(srcLib)) {
   copiedCount++;
 }
 
-// Copy workspace package (@ez-bokasafn/types) from node_modules
-// since it's a workspace dependency that Azure won't be able to install
-const workspacePkg = '@ez-bokasafn';
-const srcWorkspacePath = join(__dirname, '..', '..', '..', 'node_modules', workspacePkg);
-const destWorkspacePath = join(__dirname, '..', 'dist', 'node_modules', workspacePkg);
+// Copy node_modules for runtime dependencies
+// Include workspace packages and all production dependencies needed by Azure Functions
+const distNodeModules = join(__dirname, '..', 'dist', 'node_modules');
+const rootNodeModules = join(__dirname, '..', '..', '..', 'node_modules');
 
-if (existsSync(srcWorkspacePath)) {
-  console.log('📦 Copying workspace package dependencies...');
+if (existsSync(rootNodeModules)) {
+  console.log('📦 Copying production dependencies to dist...');
   try {
-    mkdirSync(join(__dirname, '..', 'dist', 'node_modules'), { recursive: true });
-    cpSync(srcWorkspacePath, destWorkspacePath, { recursive: true, force: true });
-    console.log('  ✓ Copied @ez-bokasafn package');
+    mkdirSync(distNodeModules, { recursive: true });
+    // Copy node_modules structure, excluding dev-only packages
+    const packages = ['@azure', '@ez-bokasafn', 'applicationinsights'];
+    packages.forEach(pkg => {
+      const src = join(rootNodeModules, pkg);
+      const dest = join(distNodeModules, pkg);
+      if (existsSync(src)) {
+        cpSync(src, dest, { recursive: true, force: true });
+      }
+    });
+    // Also copy .pnpm directory for pnpm compatibility
+    const pnpmSrc = join(rootNodeModules, '.pnpm');
+    const pnpmDest = join(distNodeModules, '.pnpm');
+    if (existsSync(pnpmSrc)) {
+      cpSync(pnpmSrc, pnpmDest, { recursive: true, force: true });
+    }
+    console.log('  ✓ Copied dependencies');
     copiedCount++;
   } catch (err) {
-    console.error(`  ✗ Failed to copy workspace packages: ${err.message}`);
+    console.error(`  ✗ Failed to copy dependencies: ${err.message}`);
   }
 }
 
