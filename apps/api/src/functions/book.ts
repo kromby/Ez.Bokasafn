@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { getFullRecord, getPhysicalService } from '../lib/leitir.js';
 import { shapeBook } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
@@ -27,5 +27,12 @@ async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpRe
     return { status: 502, jsonBody: { error: { message: 'upstream failure' } } };
   }
 }
+
+app.http('book', {
+  methods: ['GET'],
+  authLevel: 'anonymous',
+  route: 'book/{mmsId}',
+  handler
+});
 
 export { handler as default };

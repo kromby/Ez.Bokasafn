@@ -89,7 +89,9 @@
       "Bash(curl -v \"https://thankful-moss-026f78303.7.azurestaticapps.net/api/search?q=kennarinn&lib=sem\")",
       "Bash(curl *)",
       "Bash(gh workflow *)",
-      "Bash(mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page *)"
+      "Bash(mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page *)",
+      "Bash(chmod +x /tmp/check_test.sh)",
+      "Bash(/tmp/check_test.sh)"
     ]
   }
 }

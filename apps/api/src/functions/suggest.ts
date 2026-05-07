@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { suggest } from '../lib/leitir.js';
 import { shapeSuggest } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
@@ -22,5 +22,12 @@ async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpRe
     return { status: 502, jsonBody: { error: { message: 'upstream failure' } } };
   }
 }
+
+app.http('suggest', {
+  methods: ['GET'],
+  authLevel: 'anonymous',
+  route: 'suggest',
+  handler
+});
 
 export { handler as default };

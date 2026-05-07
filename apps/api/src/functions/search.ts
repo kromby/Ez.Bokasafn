@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from '@azure/functions';
 import { search } from '../lib/leitir.js';
 import { shapeSearch } from '../lib/shape.js';
 import { assertAllowedOrigin } from '../lib/originCheck.js';
@@ -28,5 +28,12 @@ async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpRe
     return { status: 502, jsonBody: { error: { message: 'upstream failure', details: errMsg } } };
   }
 }
+
+app.http('search', {
+  methods: ['GET'],
+  authLevel: 'anonymous',
+  route: 'search',
+  handler
+});
 
 export { handler as default };
