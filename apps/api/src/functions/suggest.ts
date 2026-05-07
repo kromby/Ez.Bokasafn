@@ -6,7 +6,7 @@ import { HttpError } from '../lib/errors.js';
 import { initTelemetry } from '../lib/telemetry.js';
 initTelemetry();
 
-export default async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
+async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpResponseInit> {
   try {
     assertAllowedOrigin(req);
     const q = req.query.get('q')?.trim();
@@ -22,3 +22,5 @@ export default async function handler(req: HttpRequest, ctx: InvocationContext):
     return { status: 502, jsonBody: { error: { message: 'upstream failure' } } };
   }
 }
+
+export { handler as default };

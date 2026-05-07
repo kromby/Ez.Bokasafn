@@ -29,4 +29,4 @@ async function handler(req: HttpRequest, ctx: InvocationContext): Promise<HttpRe
   }
 }
 
-export default handler;
+export { handler as default };
