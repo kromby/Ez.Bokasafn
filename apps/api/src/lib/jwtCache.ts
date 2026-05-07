@@ -19,16 +19,22 @@ async function fetchFresh(reason: 'expiry' | 'auth-error' = 'expiry'): Promise<s
   const url =
     `${base}/primaws/rest/pub/institution/${inst}/guestJwt` +
     `?isGuest=true&lang=is&viewId=${encodeURIComponent(vid)}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`JWT fetch failed: ${res.status}`);
-  const token = (await res.text()).trim().replace(/^"|"$/g, '');
-  cachedToken = token;
-  cachedExp = decodeExp(token);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
   try {
-    const { trackEvent } = await import('./telemetry.js');
-    trackEvent('jwt_refreshed', { reason });
-  } catch {}
-  return token;
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) throw new Error(`JWT fetch failed: ${res.status}`);
+    const token = (await res.text()).trim().replace(/^"|"$/g, '');
+    cachedToken = token;
+    cachedExp = decodeExp(token);
+    try {
+      const { trackEvent } = await import('./telemetry.js');
+      trackEvent('jwt_refreshed', { reason });
+    } catch {}
+    return token;
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 export async function getJwt(): Promise<string> {
