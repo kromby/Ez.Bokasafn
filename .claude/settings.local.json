@@ -93,7 +93,8 @@
       "Bash(func start *)",
       "Bash(pkill -9 -f \"func start\")",
       "Bash(npm install *)",
-      "Bash(ALLOWED_ORIGINS=http://localhost:5173 npm start)"
+      "Bash(ALLOWED_ORIGINS=http://localhost:5173 npm start)",
+      "Bash(npm cache *)"
     ]
   }
 }
