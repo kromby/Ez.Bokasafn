@@ -25,18 +25,11 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Build app and API
-        run: npm run build -ws
-      - name: Debug API structure
-        run: |
-          echo "=== API dist directory structure ==="
-          find apps/api/dist -maxdepth 2 -type f \( -name '*.json' -o -name '*.js' \) ! -path '*/tests/*' | head -20
-          echo ""
-          echo "=== search/function.json content ==="
-          cat apps/api/dist/search/function.json
-          echo ""
-          echo "=== search/index.js first 20 lines ==="
-          head -20 apps/api/dist/search/index.js
+      - name: Build web
+        run: npm run build -w web
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
       - name: Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -44,14 +37,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_MOSS_026F78303 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "./apps/web/build" # Built app content directory
-          api_location: "./apps/api/dist" # Api source code path
-          config_file_location: "./" # Location of staticwebapp.config.json
+          app_location: "./apps/web/build"
+          config_file_location: "./"
           skip_app_build: true
-          skip_api_build: false
-          ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
