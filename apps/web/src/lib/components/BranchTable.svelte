@@ -1,8 +1,26 @@
 <script lang="ts">
   import type { BranchAvailability } from '@ez-bokasafn/types';
-  let { branches } = $props();
+  let { branches, pinned }: { branches: BranchAvailability[]; pinned?: BranchAvailability } = $props();
   const onShelf = $derived(branches.filter((b) => b.status === 'on-shelf').length);
 </script>
+
+{#if pinned}
+  <div class="pinned-card">
+    <div class="pinned-eyebrow">Þitt safn</div>
+    <div class="pinned-row">
+      <div>
+        <div class="branch-name">{pinned.branch}</div>
+        {#if pinned.callNumber}<div class="branch-call">{pinned.callNumber}</div>{/if}
+      </div>
+      <div class={`branch-status ${pinned.status === 'on-shelf' ? 'avail' : 'loan'}`}>
+        {pinned.status === 'on-shelf' ? 'Á hillu' : 'Í útláni'}
+        {#if pinned.status === 'on-loan' && pinned.earliestReturn}
+          <span class="due">Skilað {pinned.earliestReturn}</span>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/if}
 
 <div class="branch-table">
   <div class="branch-table-head">
@@ -26,6 +44,29 @@
 </div>
 
 <style>
+  .pinned-card {
+    margin: 24px 16px 0;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 16px;
+    background-color: var(--bg-2);
+  }
+
+  .pinned-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+  }
+
+  .pinned-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .branch-table {
     margin: 32px 16px;
     border: 1px solid var(--border-light);
