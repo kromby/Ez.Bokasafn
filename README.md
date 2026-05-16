@@ -9,7 +9,7 @@ Ez Bokasafn (Easy Library) is an alternative interface to leitir.is, the unified
 ## Tech Stack
 
 - **Frontend:** [SvelteKit](https://kit.svelte.dev/) + [Vite](https://vitejs.dev/) + TypeScript
-- **Backend:** [Azure Functions](https://azure.microsoft.com/services/functions/) + Node.js
+- **Backend:** [Ez.Leitir](../Ez.Leitir) — standalone .NET Azure Functions service (separate repo/project)
 - **Testing:** [Vitest](https://vitest.dev/) (unit), [Playwright](https://playwright.dev/) (E2E)
 - **Package Manager:** [npm](https://www.npmjs.com/)
 - **Monorepo:** Workspace packages with shared types
@@ -19,13 +19,14 @@ Ez Bokasafn (Easy Library) is an alternative interface to leitir.is, the unified
 ```
 .
 ├── apps/
-│   ├── api/              # Azure Functions backend
 │   └── web/              # SvelteKit frontend application
 ├── packages/
 │   └── types/            # Shared TypeScript types
 └── docs/
-    └── leitir-api-notes.md  # API integration documentation
+    └── leitir-api-notes.md  # Notes on the upstream leitir.is API
 ```
+
+The backend lives in a separate project, `Ez.Leitir`, which exposes a small JSON API the frontend consumes.
 
 ## Development
 
@@ -33,6 +34,7 @@ Ez Bokasafn (Easy Library) is an alternative interface to leitir.is, the unified
 
 - **Node.js** 18+
 - **npm** 10+
+- A running instance of the [Ez.Leitir](../Ez.Leitir) .NET API (default: `http://localhost:7071`)
 
 ### Setup
 
@@ -41,24 +43,25 @@ Ez Bokasafn (Easy Library) is an alternative interface to leitir.is, the unified
    npm install
    ```
 
-2. Run development servers:
+2. Configure the frontend's API connection:
    ```bash
-   # Terminal 1: Web frontend
-   npm run dev:web
+   cp apps/web/.env.example apps/web/.env
+   ```
+   Edit `apps/web/.env` if your `Ez.Leitir` instance runs somewhere other than `http://localhost:7071`, or uses a non-default API key. The dev key matches `LEITIR_API_KEY` in `Ez.Leitir/local.settings.json`.
 
-   # Terminal 2: API backend
-   npm run dev:api
+3. Start the API (in the `Ez.Leitir` project) and then run the web dev server:
+   ```bash
+   npm run dev:web
    ```
 
-The web app runs at `http://localhost:5173` and the API at `http://localhost:7071`.
+The web app runs at `http://localhost:5173`.
 
 ### Scripts
 
 | Command | Description |
 |---------|-------------|
 | `npm run dev:web` | Start SvelteKit dev server |
-| `npm run dev:api` | Start Azure Functions emulator |
-| `npm run build` | Build all packages |
+| `npm run build` | Build all workspaces |
 | `npm test` | Run all tests once |
 | `npm run typecheck` | Run TypeScript type checking |
 
@@ -74,34 +77,29 @@ npm run test:e2e -w web  # Run Playwright E2E tests
 npm run typecheck -w web # Type check with Svelte
 ```
 
-### API
-
-```bash
-npm run dev:api      # Development server (Azure Functions emulator)
-npm run build -w api # Compile TypeScript
-npm test -w api      # Run unit tests
-npm run typecheck -w api # Type check
-```
-
 ## Architecture
 
-Ez Bokasafn proxies requests to the leitir.is API (`primaws` endpoints) through an Azure Functions backend. This backend approach provides:
+The SvelteKit frontend talks directly to the `Ez.Leitir` .NET API over HTTPS. That service is responsible for proxying leitir.is, managing JWT tokens, and shaping responses; this repo contains only the frontend.
 
-- **CORS isolation:** Handles CORS restrictions when calling leitir.is from a browser
-- **Token management:** Manages JWT tokens and handles refresh/caching
-- **IP binding:** Provides a stable origin for calls where IP binding is enforced
-- **Analytics:** Instruments requests with Application Insights
+### Environment variables (frontend)
 
-### Key Endpoints
+| Variable | Purpose |
+|----------|---------|
+| `VITE_API_BASE_URL` | Origin of the `Ez.Leitir` API (e.g. `http://localhost:7071`) |
+| `VITE_API_KEY` | Value sent as the `X-Api-Key` request header |
+| `VITE_CF_WA_TOKEN` | Cloudflare Web Analytics token (optional, production only) |
 
-The backend proxies these leitir.is endpoints:
-- **Suggest:** Autocomplete for search queries
-- **PNX Search:** Full-text search across the library catalog
-- **Delivery/Holdings:** Availability and physical copy information
-- **Full Record:** Complete metadata for a catalog item
-- **Facets:** Sidebar filters and faceted search
+Note: `VITE_*` values are inlined into the client bundle at build time and therefore publicly visible. `VITE_API_KEY` is intended as a soft rate-limit / abuse deterrent, not a secret.
 
-See `docs/leitir-api-notes.md` for detailed API documentation.
+### Endpoints consumed
+
+The frontend calls three endpoints on `Ez.Leitir`:
+
+- `GET /api/suggest?q=…&scope=…` — autocomplete suggestions
+- `GET /api/search?q=…&scope=…&offset=…` — full-text search with availability
+- `GET /api/book/{mmsId}` — full record + per-branch availability
+
+See `docs/leitir-api-notes.md` for notes on the upstream leitir.is API the backend wraps.
 
 ## Features
 
@@ -116,8 +114,8 @@ See `docs/leitir-api-notes.md` for detailed API documentation.
 
 Contributions are welcome! Please ensure:
 
-- All tests pass: `pnpm test`
-- Code is type-checked: `pnpm typecheck`
+- All tests pass: `npm test`
+- Code is type-checked: `npm run typecheck`
 - Commits follow conventional commits format
 
 ## License
