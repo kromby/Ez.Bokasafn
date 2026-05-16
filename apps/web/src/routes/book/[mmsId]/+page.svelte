@@ -89,7 +89,7 @@
     <p class="summary">{data.book.summary}</p>
   {/if}
 
-  {#if data.branches.length > 0}
+  {#if pinned || others.length > 0}
     <BranchTable branches={others} {pinned} />
     <div style="height:36px"></div>
   {/if}

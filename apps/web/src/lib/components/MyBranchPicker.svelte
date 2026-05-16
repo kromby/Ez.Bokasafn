@@ -3,6 +3,8 @@
   import { BRANCHES } from '$lib/branches';
 
   let open = $state(false);
+  let triggerEl: HTMLButtonElement | undefined = $state();
+  let dialogEl: HTMLDivElement | undefined = $state();
   const selected = $derived($myBranch);
 
   function pick(name: string) {
@@ -12,20 +14,20 @@
 
   function openDialog() {
     open = true;
-    setTimeout(() => {
-      (document.querySelector('[role="dialog"]') as HTMLElement | null)?.focus();
-    }, 0);
+    setTimeout(() => dialogEl?.focus(), 0);
   }
 
   function closeDialog() {
     open = false;
-    setTimeout(() => {
-      (document.querySelector('.scope') as HTMLElement | null)?.focus();
-    }, 0);
+    setTimeout(() => triggerEl?.focus(), 0);
+  }
+
+  function onBackdropClick(e: MouseEvent) {
+    if (e.target === e.currentTarget) closeDialog();
   }
 </script>
 
-<button class="scope" onclick={openDialog} aria-haspopup="dialog" aria-expanded={open}>
+<button class="scope" bind:this={triggerEl} onclick={openDialog} aria-haspopup="dialog" aria-expanded={open}>
   <span class="scope-dot"></span>
   <span>{selected ?? 'Veldu safn'}</span>
   <svg class="scope-caret" viewBox="0 0 12 12" fill="none">
@@ -35,19 +37,16 @@
 
 {#if open}
   <div
+    bind:this={dialogEl}
     role="dialog"
     aria-label="Veldu þitt safn"
     aria-modal="true"
     tabindex="-1"
     style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:50;display:flex;align-items:flex-end;"
-    onclick={closeDialog}
+    onclick={onBackdropClick}
     onkeydown={(e) => e.key === 'Escape' && closeDialog()}
   >
-    <div
-      style="background:var(--bg);width:100%;border-radius:18px 18px 0 0;padding:18px 16px 28px;"
-      onclick={(e) => e.stopPropagation()}
-      role="presentation"
-    >
+    <div style="background:var(--bg);width:100%;border-radius:18px 18px 0 0;padding:18px 16px 28px;">
       <div style="font-size:13px;color:var(--ink-3);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;margin-bottom:10px;">Veldu þitt safn</div>
       {#each BRANCHES as name (name)}
         <button

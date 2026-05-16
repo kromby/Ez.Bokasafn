@@ -22,26 +22,28 @@
   </div>
 {/if}
 
-<div class="branch-table">
-  <div class="branch-table-head">
-    <span>Staða eftir safni</span>
-    <span class="count">{branches.length} söfn · {onShelf} á hillunni</span>
-  </div>
-  {#each branches as b (b.branch)}
-    <div class="branch-row">
-      <div>
-        <div class="branch-name">{b.branch}</div>
-        {#if b.callNumber}<div class="branch-call">{b.callNumber}</div>{/if}
-      </div>
-      <div class={`branch-status ${b.status === 'on-shelf' ? 'avail' : 'loan'}`}>
-        {b.status === 'on-shelf' ? 'Á hillu' : 'Í útláni'}
-        {#if b.status === 'on-loan' && b.earliestReturn}
-          <span class="due">Skilað {b.earliestReturn}</span>
-        {/if}
-      </div>
+{#if branches.length > 0}
+  <div class="branch-table">
+    <div class="branch-table-head">
+      <span>Staða eftir safni</span>
+      <span class="count">{branches.length} söfn · {onShelf} á hillunni</span>
     </div>
-  {/each}
-</div>
+    {#each branches as b (b.branch)}
+      <div class="branch-row">
+        <div>
+          <div class="branch-name">{b.branch}</div>
+          {#if b.callNumber}<div class="branch-call">{b.callNumber}</div>{/if}
+        </div>
+        <div class={`branch-status ${b.status === 'on-shelf' ? 'avail' : 'loan'}`}>
+          {b.status === 'on-shelf' ? 'Á hillu' : 'Í útláni'}
+          {#if b.status === 'on-loan' && b.earliestReturn}
+            <span class="due">Skilað {b.earliestReturn}</span>
+          {/if}
+        </div>
+      </div>
+    {/each}
+  </div>
+{/if}
 
 <style>
   .pinned-card {
