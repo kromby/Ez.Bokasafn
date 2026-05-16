@@ -1,7 +1,6 @@
 <script>
   import { goto } from '$app/navigation';
-  import { libraryScope } from '$lib/stores';
-  import LibraryScopePicker from '$lib/components/LibraryScopePicker.svelte';
+  import MyBranchPicker from '$lib/components/MyBranchPicker.svelte';
 
   let q = '';
 
@@ -9,10 +8,7 @@
     e.preventDefault();
     const trimmed = q.trim();
     if (!trimmed) return;
-    const scope = $libraryScope?.code;
-    const params = new URLSearchParams({ q: trimmed });
-    if (scope) params.set('lib', scope);
-    goto(`/search?${params.toString()}`);
+    goto(`/search?q=${encodeURIComponent(trimmed)}`);
   }
 </script>
 
@@ -20,7 +16,7 @@
 
 <div class="home" style="display:flex;flex-direction:column;min-height:100dvh;padding:0 24px;">
   <div style="padding-top:12px;display:flex;justify-content:flex-start;">
-    <LibraryScopePicker />
+    <MyBranchPicker />
   </div>
   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;padding-bottom:60px;">
     <div>
@@ -28,7 +24,7 @@
         <span class="l1">Finna</span>
         <span class="l2"><span class="underline">bók</span></span>
       </h1>
-      <p class="tagline">Á hvaða safni er hún til, og er hún á hillunni núna?</p>
+      <p class="tagline">Hvar er hún til, og er hún í hillunni núna?</p>
     </div>
 
     <form onsubmit={submit}>

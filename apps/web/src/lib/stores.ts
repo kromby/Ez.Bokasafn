@@ -1,24 +1,26 @@
 import { writable } from 'svelte/store';
-import type { LibraryScope } from '@ez-bokasafn/types';
+import { BRANCHES } from '$lib/branches';
 
-const KEY = 'lastScope';
+const KEY = 'myBranch';
 
-function readInitial(): LibraryScope | undefined {
-  if (typeof localStorage === 'undefined') return undefined;
-  const raw = localStorage.getItem(KEY);
-  if (!raw) return undefined;
-  try {
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed.code === 'string' && typeof parsed.label === 'string') return parsed;
-  } catch {}
-  return undefined;
+function normalizeBranch(name: string | null | undefined): string | undefined {
+  return name && BRANCHES.includes(name) ? name : undefined;
 }
 
-export const libraryScope = writable<LibraryScope | undefined>(readInitial());
+function readInitial(): string | undefined {
+  if (typeof localStorage === 'undefined') return undefined;
+  return normalizeBranch(localStorage.getItem(KEY));
+}
 
-export function setLibraryScope(scope: LibraryScope): void {
-  libraryScope.set(scope);
-  if (typeof localStorage !== 'undefined') {
-    localStorage.setItem(KEY, JSON.stringify(scope));
+export const myBranch = writable<string | undefined>(readInitial());
+
+export function setMyBranch(name: string | undefined): void {
+  const normalized = normalizeBranch(name);
+  myBranch.set(normalized);
+  if (typeof localStorage === 'undefined') return;
+  if (normalized === undefined) {
+    localStorage.removeItem(KEY);
+  } else {
+    localStorage.setItem(KEY, normalized);
   }
 }

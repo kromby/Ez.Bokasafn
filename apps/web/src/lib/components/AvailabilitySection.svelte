@@ -5,7 +5,7 @@
   let { books, kind } = $props();
 
   const labels = {
-    avail: { head: 'Laus', pill: (n: number) => `${n} á hillunni` },
+    avail: { head: 'Á lausu', pill: (n: number) => `${n} á hillunni` },
     loan: { head: 'Í útláni', pill: (n: number) => `${n} í biðstöðu` },
   } as const;
 </script>

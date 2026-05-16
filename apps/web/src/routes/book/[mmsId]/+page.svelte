@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { libraryScope } from '$lib/stores';
+  import { myBranch } from '$lib/stores';
   import { apiBook, ApiError } from '$lib/api';
-  import type { BookResponse } from '@ez-bokasafn/types';
+  import type { BookResponse, BranchAvailability } from '@ez-bokasafn/types';
   import BookCover from '$lib/components/BookCover.svelte';
   import BranchTable from '$lib/components/BranchTable.svelte';
   import DetailAppBar from '$lib/components/DetailAppBar.svelte';
@@ -12,16 +12,22 @@
 
   $effect(() => {
     const mmsId = $page.params.mmsId;
-    const lib = $libraryScope?.code ?? '10000_MYLIB';
     if (!mmsId) return;
 
-    apiBook(mmsId, lib)
+    apiBook(mmsId, '10000_MYLIB')
       .then((r) => (data = r))
       .catch((e) => {
         if (e instanceof ApiError && e.status === 404) error = 'Bókin fannst ekki';
         else error = (e instanceof Error ? e.message : 'An unexpected error occurred');
       });
   });
+
+  const pinned = $derived<BranchAvailability | undefined>(
+    data && $myBranch ? data.branches.find((b) => b.branch === $myBranch) : undefined,
+  );
+  const others = $derived<BranchAvailability[]>(
+    data ? (pinned ? data.branches.filter((b) => b !== pinned) : data.branches) : [],
+  );
 
   async function share() {
     if (!data) return;
@@ -83,12 +89,12 @@
     <p class="summary">{data.book.summary}</p>
   {/if}
 
-  {#if data.branches.length > 0}
-    <BranchTable branches={data.branches} />
+  {#if pinned || others.length > 0}
+    <BranchTable branches={others} {pinned} />
     <div style="height:36px"></div>
   {/if}
 {:else}
-  <div style="padding:60px 24px;text-align:center;color:var(--ink-3);" role="status" aria-live="polite">Hleður…</div>
+  <div style="padding:60px 24px;text-align:center;color:var(--ink-3);" role="status" aria-live="polite">Sækir bók…</div>
 {/if}
 
 <style>

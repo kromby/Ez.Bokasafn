@@ -57,7 +57,7 @@ function DetailScreen() {
 
         <div className="branch-table">
           <div className="branch-table-head">
-            <span>Staða eftir safni</span>
+            <span>Önnur bókasöfn</span>
             <span className="count">6 söfn · 4 á hillunni</span>
           </div>
           <div className="branch-row">

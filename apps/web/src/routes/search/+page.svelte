@@ -1,9 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { goto } from '$app/navigation';
   import { onDestroy } from 'svelte';
-  import { libraryScope, setLibraryScope } from '$lib/stores';
-  import { LIBRARY_SCOPES } from '$lib/scopes';
   import { apiSearch, ApiError } from '$lib/api';
   import type { SearchResponse } from '@ez-bokasafn/types';
   import SearchHeader from '$lib/components/SearchHeader.svelte';
@@ -16,22 +13,7 @@
 
   $effect(() => {
     const q = $page.url.searchParams.get('q') ?? '';
-    const libParam = $page.url.searchParams.get('lib');
-    const lib = libParam || $libraryScope?.code;
-
-    // If library param in URL differs from current scope, sync them
-    if (lib && libParam !== $libraryScope?.code) {
-      const found = LIBRARY_SCOPES.find((s) => s.code === lib);
-      if (found) setLibraryScope(found);
-    }
-
-    // If scope changed but URL param is missing/different, update URL
-    if (lib && libParam !== lib) {
-      goto(`?q=${encodeURIComponent($page.url.searchParams.get('q') ?? '')}&lib=${encodeURIComponent(lib)}`, { replaceState: true });
-      return; // Let the next effect cycle handle the search
-    }
-
-    if (!q || !lib) return;
+    if (!q) return;
 
     controller?.abort();
     controller = new AbortController();
@@ -39,7 +21,7 @@
     error = null;
     result = null;
 
-    apiSearch(q, lib, 0, controller.signal)
+    apiSearch(q, '10000_MYLIB', 0, controller.signal)
       .then((r) => (result = r))
       .catch((e) => {
         if ((e as Error).name === 'AbortError') return;
@@ -69,7 +51,7 @@
     <div style="padding:24px 20px;">
       <p style="font-family:var(--serif);font-size:18px;">Engin niðurstaða fyrir „{q}".</p>
       {#if result.didYouMean}
-        <a href={`/search?q=${encodeURIComponent(result.didYouMean)}&lib=${$libraryScope?.code ?? ''}`} style="color:var(--avail);font-size:15px;">
+        <a href={`/search?q=${encodeURIComponent(result.didYouMean)}`} style="color:var(--avail);font-size:15px;">
           Áttirðu við „{result.didYouMean}"?
         </a>
       {/if}
