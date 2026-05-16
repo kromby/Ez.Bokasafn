@@ -1,12 +1,12 @@
 <script lang="ts">
-  import LibraryScopePicker from './LibraryScopePicker.svelte';
+  import MyBranchPicker from './MyBranchPicker.svelte';
 
   let { value, total } = $props();
 </script>
 
 <div class="head">
   <div style="display:flex;justify-content:space-between;align-items:center;">
-    <LibraryScopePicker />
+    <MyBranchPicker />
     {#if typeof total === 'number'}
       <span style="font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums;">{total} niðurstöður</span>
     {/if}
