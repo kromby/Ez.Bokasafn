@@ -13,7 +13,7 @@
   function openDialog() {
     open = true;
     setTimeout(() => {
-      document.querySelector('[role="dialog"]')?.focus();
+      (document.querySelector('[role="dialog"]') as HTMLElement | null)?.focus();
     }, 0);
   }
 
