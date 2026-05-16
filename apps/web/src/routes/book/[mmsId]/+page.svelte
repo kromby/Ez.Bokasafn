@@ -94,7 +94,7 @@
     <div style="height:36px"></div>
   {/if}
 {:else}
-  <div style="padding:60px 24px;text-align:center;color:var(--ink-3);" role="status" aria-live="polite">Hleður…</div>
+  <div style="padding:60px 24px;text-align:center;color:var(--ink-3);" role="status" aria-live="polite">Sækir bók…</div>
 {/if}
 
 <style>

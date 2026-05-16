@@ -24,7 +24,7 @@
         <span class="l1">Finna</span>
         <span class="l2"><span class="underline">bók</span></span>
       </h1>
-      <p class="tagline">Á hvaða safni er hún til, og er hún á hillunni núna?</p>
+      <p class="tagline">Hvar er hún til, og er hún í hillunni núna?</p>
     </div>
 
     <form onsubmit={submit}>

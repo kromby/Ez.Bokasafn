@@ -2,11 +2,17 @@
   import type { BranchAvailability } from '@ez-bokasafn/types';
   let { branches, pinned }: { branches: BranchAvailability[]; pinned?: BranchAvailability } = $props();
   const onShelf = $derived(branches.filter((b) => b.status === 'on-shelf').length);
+  const sortedBranches = $derived(
+    [...branches].sort((a, b) => {
+      if (a.status === b.status) return 0;
+      return a.status === 'on-shelf' ? -1 : 1;
+    })
+  );
 </script>
 
 {#if pinned}
   <div class="pinned-card">
-    <div class="pinned-eyebrow">Þitt safn</div>
+    <div class="pinned-eyebrow">Bókasafnið mitt</div>
     <div class="pinned-row">
       <div>
         <div class="branch-name">{pinned.branch}</div>
@@ -25,10 +31,10 @@
 {#if branches.length > 0}
   <div class="branch-table">
     <div class="branch-table-head">
-      <span>Staða eftir safni</span>
+      <span>Önnur bókasöfn</span>
       <span class="count">{branches.length} söfn · {onShelf} á hillunni</span>
     </div>
-    {#each branches as b (b.branch)}
+    {#each sortedBranches as b (b.branch)}
       <div class="branch-row">
         <div>
           <div class="branch-name">{b.branch}</div>

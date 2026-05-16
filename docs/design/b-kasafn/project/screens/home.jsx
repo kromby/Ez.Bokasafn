@@ -16,7 +16,7 @@ function HomeScreen() {
               <span className="l1">Finna</span>
               <span className="l2"><span className="underline">bók</span>.</span>
             </h1>
-            <p className="tagline">Á hvaða safni er hún til, og er hún á hillunni núna?</p>
+            <p className="tagline">Hvar er hún til, og er hún í hillunni núna?</p>
           </div>
 
           <div className="home-search-block">
