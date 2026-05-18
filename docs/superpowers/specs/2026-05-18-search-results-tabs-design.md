@@ -37,7 +37,7 @@ The two stacked `<AvailabilitySection>` calls are replaced with:
 
 ## Layout sketch
 
-```
+```text
 [ Á lausu (15) ]  [ Í útláni (8) ]
 ─────────────────────────────────
   ... active section rows ...

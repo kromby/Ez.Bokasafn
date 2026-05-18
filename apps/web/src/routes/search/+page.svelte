@@ -15,12 +15,27 @@
   let loadingMore = $state(false);
   let loaded = $state(false);
   let error = $state<string | null>(null);
+  let loadMoreError = $state<string | null>(null);
   let activeTab = $state<'avail' | 'loan'>('avail');
   let controller = undefined as AbortController | undefined;
 
   $effect(() => {
     const q = $page.url.searchParams.get('q') ?? '';
-    if (!q) return;
+
+    if (!q) {
+      controller?.abort();
+      available = [];
+      onLoan = [];
+      total = 0;
+      didYouMean = null;
+      offset = 0;
+      loaded = false;
+      loading = false;
+      error = null;
+      loadMoreError = null;
+      activeTab = 'avail';
+      return;
+    }
 
     controller?.abort();
     controller = new AbortController();
@@ -32,6 +47,7 @@
     loaded = false;
     loading = true;
     error = null;
+    loadMoreError = null;
     activeTab = 'avail';
 
     apiSearch(q, '10000_MYLIB', 0, controller.signal)
@@ -56,6 +72,7 @@
     if (!q || loadingMore) return;
 
     loadingMore = true;
+    loadMoreError = null;
 
     apiSearch(q, '10000_MYLIB', offset, controller?.signal)
       .then((r) => {
@@ -65,7 +82,7 @@
       })
       .catch((e) => {
         if ((e as Error).name === 'AbortError') return;
-        error = e instanceof ApiError && e.status === 502 ? 'Eitthvað fór úrskeiðis. Reyndu aftur.' : (e instanceof Error ? e.message : 'An unexpected error occurred');
+        loadMoreError = 'Ekki tókst að hlaða fleiri. Reyndu aftur.';
       })
       .finally(() => (loadingMore = false));
   }
@@ -98,25 +115,34 @@
       {/if}
     </div>
   {:else}
-    <div style="display:flex;gap:0;border-bottom:1px solid var(--hairline);margin-bottom:0;">
+    <div role="tablist" style="display:flex;gap:0;border-bottom:1px solid var(--hairline);margin-bottom:0;">
       <button
+        role="tab"
+        id="tab-avail"
+        aria-selected={activeTab === 'avail'}
+        aria-controls="panel-avail"
         onclick={() => (activeTab = 'avail')}
         style="font-family:var(--serif);font-size:14px;padding:10px 20px;background:none;border:none;border-bottom:2px solid {activeTab === 'avail' ? 'var(--avail)' : 'transparent'};color:{activeTab === 'avail' ? 'var(--avail)' : 'var(--ink-3)'};cursor:pointer;font-weight:{activeTab === 'avail' ? 500 : 400};"
       >
         Á lausu ({available.length})
       </button>
       <button
+        role="tab"
+        id="tab-loan"
+        aria-selected={activeTab === 'loan'}
+        aria-controls="panel-loan"
         onclick={() => (activeTab = 'loan')}
         style="font-family:var(--serif);font-size:14px;padding:10px 20px;background:none;border:none;border-bottom:2px solid {activeTab === 'loan' ? 'var(--avail)' : 'transparent'};color:{activeTab === 'loan' ? 'var(--avail)' : 'var(--ink-3)'};cursor:pointer;font-weight:{activeTab === 'loan' ? 500 : 400};"
       >
         Í útláni ({onLoan.length})
       </button>
     </div>
-    {#if activeTab === 'avail'}
+    <div id="panel-avail" role="tabpanel" aria-labelledby="tab-avail" hidden={activeTab !== 'avail'}>
       <AvailabilitySection books={available} kind="avail" />
-    {:else}
+    </div>
+    <div id="panel-loan" role="tabpanel" aria-labelledby="tab-loan" hidden={activeTab !== 'loan'}>
       <AvailabilitySection books={onLoan} kind="loan" />
-    {/if}
+    </div>
     {#if hasMore}
       <div style="padding:16px 20px;text-align:center;">
         <button
@@ -126,6 +152,9 @@
         >
           {loadingMore ? 'Hleð…' : 'Sýna fleiri'}
         </button>
+        {#if loadMoreError}
+          <p style="font-size:13px;color:var(--ink-3);margin-top:6px;">{loadMoreError}</p>
+        {/if}
       </div>
     {/if}
     <div style="height:24px"></div>

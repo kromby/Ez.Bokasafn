@@ -23,7 +23,9 @@ Replace the single `result: SearchResponse | null` state in `apps/web/src/routes
 | `offset` | `number` | `0` | Next page start; incremented by 20 after each successful fetch |
 | `loading` | `boolean` | `false` | True during the initial / query-change fetch |
 | `loadingMore` | `boolean` | `false` | True during a load-more fetch |
-| `error` | `string \| null` | `null` | User-facing error message (unchanged from today) |
+| `loaded` | `boolean` | `false` | True after the first successful fetch; reset to false on query change |
+| `error` | `string \| null` | `null` | Full-page error for initial fetch failures |
+| `loadMoreError` | `string \| null` | `null` | Inline error shown near the load-more button; does not hide loaded results |
 
 ## Fetch behaviour
 
@@ -39,7 +41,7 @@ Replace the single `result: SearchResponse | null` state in `apps/web/src/routes
 1. Set `loadingMore = true`.
 2. Fetch `apiSearch(q, scope, offset, signal)` (same abort controller).
 3. On success: append new books to `available` and `onLoan`; increment `offset` by 20.
-4. On error: set `error`.
+4. On error: set `loadMoreError` (not `error` — loaded results remain visible).
 5. `finally`: `loadingMore = false`.
 
 The existing abort controller covers both paths. If `q` changes while a load-more request is in flight, the request is cancelled and state resets cleanly.
